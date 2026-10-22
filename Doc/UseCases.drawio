@@ -1,0 +1,121 @@
+<mxfile host="65bd71144e">
+    <diagram id="nZ9LrvXvvF2u3NFK8Bhi" name="Page-1">
+        <mxGraphModel dx="874" dy="2107" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-8" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-1" style="edgeStyle=none;html=1;" target="mG1wxpPeSH-L0gxfp7UT-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-12" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-1" style="edgeStyle=none;html=1;" target="mG1wxpPeSH-L0gxfp7UT-11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-14" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-1" style="edgeStyle=none;html=1;" target="mG1wxpPeSH-L0gxfp7UT-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-15" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-1" style="edgeStyle=none;html=1;" target="mG1wxpPeSH-L0gxfp7UT-5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-30" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-5" style="edgeStyle=none;html=1;dashed=1;strokeWidth=2;" target="mG1wxpPeSH-L0gxfp7UT-4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-36" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-1" style="edgeStyle=none;html=1;" target="mG1wxpPeSH-L0gxfp7UT-35">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="User&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+                    <mxGeometry height="60" width="30" x="330" y="290" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-27" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-2" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-29" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-3" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-28">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Добавить документ в отслеживание" vertex="1">
+                    <mxGeometry height="60" width="120" x="100" y="430" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Сгенерировать хеш" vertex="1">
+                    <mxGeometry height="60" width="120" x="230" y="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-31" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-4" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-26">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-32" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-4" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-25">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Сгенерировать ассиметричный колюч" vertex="1">
+                    <mxGeometry height="60" width="120" x="500" y="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-17" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-5" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-46" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-5" style="edgeStyle=none;html=1;dashed=1;dashPattern=12 12;strokeWidth=1;" target="mG1wxpPeSH-L0gxfp7UT-43">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Подписать документ" vertex="1">
+                    <mxGeometry height="60" width="120" x="285" y="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-50" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-6" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-49">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Сохранить подпись" vertex="1">
+                    <mxGeometry height="60" width="120" x="80" y="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-34" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-7" style="edgeStyle=none;html=1;dashed=1;dashPattern=8 4 1 4;" target="mG1wxpPeSH-L0gxfp7UT-5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Получить подпись" vertex="1">
+                    <mxGeometry height="60" width="120" x="470" y="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-33" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-11" style="edgeStyle=none;html=1;dashed=1;dashPattern=8 4 1 4;" target="mG1wxpPeSH-L0gxfp7UT-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Получить хеш" vertex="1">
+                    <mxGeometry height="60" width="120" x="340" y="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Сохранить приватный ключ&amp;nbsp;" vertex="1">
+                    <mxGeometry height="60" width="120" x="680" y="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-41" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-26" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-40">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Сохранить публичый ключ&amp;nbsp;" vertex="1">
+                    <mxGeometry height="60" width="120" x="650" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-48" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-28" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-47">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Сохранить хеш" vertex="1">
+                    <mxGeometry height="60" width="120" x="400" y="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-37" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-35" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-38" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-35" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-39" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-35" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-40">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-35" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Проверить подпись документа" vertex="1">
+                    <mxGeometry height="60" width="120" x="470" y="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-40" parent="1" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" value="Публичные ключи" vertex="1">
+                    <mxGeometry height="80" width="120" x="680" y="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-43" parent="1" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" value="Приватные ключи" vertex="1">
+                    <mxGeometry height="80" width="120" x="510" y="-20" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-44" edge="1" parent="1" source="mG1wxpPeSH-L0gxfp7UT-25" style="edgeStyle=none;html=1;dashed=1;" target="mG1wxpPeSH-L0gxfp7UT-43">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-47" parent="1" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" value="Хеши" vertex="1">
+                    <mxGeometry height="80" width="120" x="580" y="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="mG1wxpPeSH-L0gxfp7UT-49" parent="1" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" value="Подписи" vertex="1">
+                    <mxGeometry height="80" width="120" x="80" y="220" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
