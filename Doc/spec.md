@@ -1,5 +1,26 @@
 # SecureEDM
 
+## Технические решения
+
+**AuthServer/BridgeServer/Client:**
+
+Язык программирования: C# 
+Архитектура: Чистая архитектура
+
+**AuthServer/BridgeServer:**
+
+СУБД: PostgreSQL
+Cache: Redis
+Server framework: ASP.NET Core
+DB framework: Dapper
+
+**Client:**
+
+СУБД: SQLite
+Cache: InMemory
+UI framework: Avalonia
+DB framework: EF Core
+
 ## Архитектурные принципы
 
 ### Границы bounded contexts
