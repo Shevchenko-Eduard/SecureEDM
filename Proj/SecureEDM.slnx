@@ -1,0 +1,27 @@
+<Solution>
+  <Folder Name="/SecureEDM.Client.Presentation/">
+    <Project Path="SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.Android/SecureEDM.Client.Presentation.Android.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.Browser/SecureEDM.Client.Presentation.Browser.csproj" />
+    <Project Path="SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.Desktop/SecureEDM.Client.Presentation.Desktop.csproj" />
+    <Project Path="SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.iOS/SecureEDM.Client.Presentation.iOS.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="SecureEDM.Client.Presentation/SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.csproj" />
+  </Folder>
+  <Project Path="SecureEDM.AuthServer.Application/SecureEDM.AuthServer.Application.csproj" />
+  <Project Path="SecureEDM.AuthServer.Domain/SecureEDM.AuthServer.Domain.csproj" />
+  <Project Path="SecureEDM.AuthServer.Infrastructure/SecureEDM.AuthServer.Infrastructure.csproj" />
+  <Project Path="SecureEDM.AuthServer.Presentation/SecureEDM.AuthServer.Presentation.csproj" />
+  <Project Path="SecureEDM.BridgeServer.Application/SecureEDM.BridgeServer.Application.csproj" />
+  <Project Path="SecureEDM.BridgeServer.Domain/SecureEDM.BridgeServer.Domain.csproj" />
+  <Project Path="SecureEDM.BridgeServer.Infrastructure/SecureEDM.BridgeServer.Infrastructure.csproj" />
+  <Project Path="SecureEDM.BridgeServer.Presentation/SecureEDM.BridgeServer.Presentation.csproj" />
+  <Project Path="SecureEDM.Client.Application/SecureEDM.Client.Application.csproj" />
+  <Project Path="SecureEDM.Client.Domain/SecureEDM.Client.Domain.csproj" />
+  <Project Path="SecureEDM.Client.Infrastructure/SecureEDM.Client.Infrastructure.csproj" />
+  <Project Path="SecureEDM.Common.Contracts/SecureEDM.Common.Contracts.csproj" />
+  <Project Path="SecureEDM.Common.Domain/SecureEDM.Common.Domain.csproj" />
+  <Project Path="SecureEDM.Common.Infrastructure/SecureEDM.Common.Infrastructure.csproj" />
+</Solution>

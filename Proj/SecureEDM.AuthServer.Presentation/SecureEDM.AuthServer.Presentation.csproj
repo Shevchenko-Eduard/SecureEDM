@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\SecureEDM.AuthServer.Application\SecureEDM.AuthServer.Application.csproj" />
+    <ProjectReference Include="..\SecureEDM.AuthServer.Infrastructure\SecureEDM.AuthServer.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+</Project>

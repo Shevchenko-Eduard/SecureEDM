@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\SecureEDM.BridgeServer.Application\SecureEDM.BridgeServer.Application.csproj" />
+    <ProjectReference Include="..\SecureEDM.BridgeServer.Infrastructure\SecureEDM.BridgeServer.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+</Project>
