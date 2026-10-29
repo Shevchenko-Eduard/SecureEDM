@@ -14,8 +14,8 @@ CREATE TABLE "user" (
 	DOB date,
 	created_at timestamp NOT NULL,
 	settingID int REFERENCES user_setting (settingID),
-	updated_at timestamp NOT NULL,
-	deleted_at timestamp NOT NULL
+	updated_at timestamp,
+	deleted_at timestamp
 );
 
 CREATE TABLE attestation (
@@ -28,7 +28,7 @@ CREATE TABLE attestation (
 	signature varchar (256) NOT NULL,
 	Created_at timestamp NOT NULL,
 	attest bool NOT NULL,
-	revoked_at timestamp NOT NULL,
+	revoked_at timestamp,
 	attestation_at timestamp NOT NULL
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE hash_of_password (
 	hash_bytes bytea NOT NULL,
 	algorithm varchar (256) NOT NULL,
 	created_at timestamp NOT NULL,
-	revoked_at timestamp NOT NULL
+	revoked_at timestamp
 );
 
 CREATE TABLE "group" (
@@ -47,7 +47,7 @@ CREATE TABLE "group" (
 	name varchar (64) NOT NULL,
 	description text,
 	created_at timestamp NOT NULL,
-	revoked_at timestamp NOT NULL
+	revoked_at timestamp
 );
 
 CREATE TABLE user_group_link (
@@ -55,21 +55,21 @@ CREATE TABLE user_group_link (
 	groupID int REFERENCES "group",
 	is_admin bool NOT NULL,
 	created_at timestamp NOT NULL,
-	revoked_at timestamp NOT NULL
+	revoked_at timestamp
 );
 
 CREATE TABLE parent_group (
 	parent_groupID int REFERENCES "group" (groupID),
 	sub_groupID int REFERENCES "group" (groupID),
 	created_at timestamp NOT NULL,
-	revoked_at timestamp NOT NULL
+	revoked_at timestamp
 );
 
 CREATE TABLE session (
 	sessionID int PRIMARY KEY,
 	userID int REFERENCES "user",
 	created_at timestamp NOT NULL,
-	revoked_at timestamp NOT NULL,
+	revoked_at timestamp,
 	last_extension timestamp NOT NULL
 );
 
@@ -79,8 +79,8 @@ CREATE TABLE refresh_token (
 	hash_of_token_bytes bytea NOT NULL,
 	algorithm varchar (64) NOT NULL,
 	created_at timestamp NOT NULL,
-	revoked_at timestamp NOT NULL,
-	last_extension timestamp NOT NULL -- Не уверен что это дата
+	revoked_at timestamp,
+	last_extension timestamp -- Не уверен что это дата
 );
 
 CREATE INDEX user_id_index ON "user" (userID);
