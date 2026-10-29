@@ -6,6 +6,7 @@
 
 - Язык программирования: C# 
 - Архитектура: Чистая архитектура
+- Cryptography core: BouncyCastle.Cryptography
 
 **AuthServer/BridgeServer:**
 
@@ -13,13 +14,15 @@
 - Cache: Redis
 - Server framework: ASP.NET Core
 - DB framework: Dapper
+- Gen string sql connection: Npgsql
 
 **Client:**
 
 - СУБД: SQLite
 - Cache: InMemory
 - UI framework: Avalonia
-- DB framework: EF Core
+- DB framework: Microsoft.EntityFrameworkCore.Sqlite
+- Gen string sql connection: Microsoft.Data.Sqlite
 
 ## Архитектурные принципы
 
@@ -197,3 +200,65 @@ Signature.RevokedAt IS NULL
 
 - `./*` - мягкое удаление сущьности, указывает дату DeleteAt.
 
+## Client outbox
+
+### Граф переходов
+
+События, которые двигают состояние:
+
+- `LocalEdit` — пользователь изменил файл.
+- `LocalDelete` — пользователь удалил файл.
+- `LocalUntrack` — пользователь перестал отслеживать.
+- `RemoteEdit` — сервер сообщил об изменении (при синхронизации).
+- `RemoteDelete` — сервер сообщил об удалении.
+- `SyncOk` — синхронизация успешна.
+- `SyncFail` — синхронизация упала (сеть/сервер).
+- `SyncConflict` — обнаружен конфликт.
+- `RightsLost` — потеряли права.
+- `UserResolveKeepLocal` — пользователь выбрал «оставить локальную».
+- `UserResolveKeepRemote` — пользователь выбрал «принять удалённую».
+- `UserResolveMerge` — пользователь смержил вручную.
+- `UserResolveResurrect` — пользователь решил воскресить удалённый.
+- `UserResolveConfirmDelete` — пользователь подтвердил удаление.
+
+### Таблица переходов
+
+| Из | Событие | В | Примечание |
+|---|---|---|---|
+| `Pending` | `SyncOk` | `Synced` | Успешная отправка |
+| `Pending` | `SyncFail` | `SyncError` | Сеть/сервер недоступен |
+| `Pending` | `SyncConflict` | `Conflict` | Сервер сообщил, что удалённо тоже меняли |
+| `Pending` | `LocalEdit` | `Pending` | Остаётся, изменения накапливаются |
+| `Pending` | `LocalDelete` | `DeletedLocally` | Удалили до отправки |
+| `Pending` | `RightsLost` | `InsufficientRights` | Права отозваны до синхронизации |
+| `Pending` | `LocalUntrack` | `Detached` | Перестали отслеживать |
+| `Synced` | `LocalEdit` | `Pending` | Обычное изменение |
+| `Synced` | `LocalDelete` | `DeletedLocally` | Удалили локально |
+| `Synced` | `RemoteEdit` | `Pending` (если нет локальных) / `Conflict` (если есть) | Сервер сообщил об изменении |
+| `Synced` | `RemoteDelete` | `DeletedRemotely` | Сервер удалил |
+| `Synced` | `RightsLost` | `InsufficientRights` | Потеряли права |
+| `Synced` | `LocalUntrack` | `Detached` | Перестали отслеживать |
+| `Conflict` | `UserResolveKeepLocal` | `Pending` | Локальная побеждает, отправляем на сервер |
+| `Conflict` | `UserResolveKeepRemote` | `Synced` | Удалённая побеждает, локальную перезаписываем |
+| `Conflict` | `UserResolveMerge` | `Pending` | Смержили вручную, отправляем |
+| `Conflict` | `RightsLost` | `InsufficientRights` | Права отозваны во время конфликта |
+| `Conflict` | `LocalDelete` | `DeleteConflict` | Удалили во время конфликта |
+| `DeleteConflict` | `UserResolveResurrect` | `Pending` | Воскрешаем, отправляем как новый |
+| `DeleteConflict` | `UserResolveConfirmDelete` | `DeletedLocally` | Подтвердили удаление |
+| `DeleteConflict` | `RightsLost` | `InsufficientRights` | Права отозваны |
+| `DeletedLocally` | `SyncOk` | `Synced` (удалён) / удаление из БД | Удаление применено, запись можно удалить |
+| `DeletedLocally` | `SyncFail` | `SyncError` | Не удалось отправить удаление |
+| `DeletedLocally` | `RemoteEdit` | `DeleteConflict` | Удалённо изменили после локального удаления |
+| `DeletedLocally` | `LocalUntrack` | `Detached` | Передумали, перестали отслеживать (файла нет) |
+| `DeletedRemotely` | `SyncOk` | `Detached` / удаление из БД | Локально удалили, синхронизация завершена |
+| `DeletedRemotely` | `LocalEdit` | `DeleteConflict` | Пользователь изменил локально после удалённого удаления |
+| `DeletedRemotely` | `LocalUntrack` | `Detached` | Перестали отслеживать, не удаляя локально |
+| `InsufficientRights` | `RightsRestored` | `Synced` (если локально не менялось) / `Pending` | Права вернули |
+| `InsufficientRights` | `LocalUntrack` | `Detached` | Перестали отслеживать |
+| `InsufficientRights` | `LocalDelete` | `Detached` | Локально удалили, синхронизировать нечего |
+| `Detached` | `LocalTrack` | `Pending` (если сервер не знает) / `Synced` (если сервер знает) | Снова начали отслеживать |
+| `Detached` | `LocalEdit` | `Detached` | Изменения не синхронизируются, пока не `LocalTrack` |
+| `SyncError` | `SyncOk` | `Synced` | Retry успешен |
+| `SyncError` | `SyncFail` | `SyncError` | Retry не удался, повторим позже |
+| `SyncError` | `LocalDelete` | `DeletedLocally` | Удалили во время ошибки |
+| `SyncError` | `LocalUntrack` | `Detached` | Перестали отслеживать |
