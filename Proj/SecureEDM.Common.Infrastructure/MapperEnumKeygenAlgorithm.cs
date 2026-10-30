@@ -1,0 +1,65 @@
+using SecureEDM.Common.Domain.Enums;
+
+namespace SecureEDM.Common.Infrastructure;
+
+public class MapperEnumKeygenAlgorithm : IMapperEnum<EnumKeygenAlgorithm>
+{
+    static MapperEnumKeygenAlgorithm()
+    {
+        IdToName = new(new Dictionary<EnumKeygenAlgorithm, string>{
+            { EnumKeygenAlgorithm.AIMer, "AIMer" },
+            { EnumKeygenAlgorithm.BIKE, "BIKE" },
+            { EnumKeygenAlgorithm.BLS, "BLS" },
+            { EnumKeygenAlgorithm.CMCE, "CMCE" },
+            { EnumKeygenAlgorithm.CramerShoup, "CramerShoup" },
+            { EnumKeygenAlgorithm.DHBasic, "DHBasic" },
+            { EnumKeygenAlgorithm.DH, "DH" },
+            { EnumKeygenAlgorithm.Dilithium, "Dilithium" },
+            { EnumKeygenAlgorithm.DSA, "DSA" },
+            { EnumKeygenAlgorithm.DSTU4145, "DSTU4145" },
+            { EnumKeygenAlgorithm.ECCSI, "ECCSI" },
+            { EnumKeygenAlgorithm.EC, "EC" },
+            { EnumKeygenAlgorithm.Ed25519, "Ed25519" },
+            { EnumKeygenAlgorithm.Ed448, "Ed448" },
+            { EnumKeygenAlgorithm.ElGamal, "ElGamal" },
+            { EnumKeygenAlgorithm.Faest, "Faest" },
+            { EnumKeygenAlgorithm.Falcon, "Falcon" },
+            { EnumKeygenAlgorithm.FrodoKEM, "FrodoKEM" },
+            { EnumKeygenAlgorithm.Frodo, "Frodo" },
+            { EnumKeygenAlgorithm.GOST3410, "GOST3410" },
+            { EnumKeygenAlgorithm.HAETAE, "HAETAE" },
+            { EnumKeygenAlgorithm.Hawk, "Hawk" },
+            { EnumKeygenAlgorithm.HQC, "HQC" },
+            { EnumKeygenAlgorithm.HSS, "HSS" },
+            { EnumKeygenAlgorithm.LMS, "LMS" },
+            { EnumKeygenAlgorithm.Mayo, "Mayo" },
+            { EnumKeygenAlgorithm.MLDSA, "MLDSA" },
+            { EnumKeygenAlgorithm.MLKEM, "MLKEM" },
+            { EnumKeygenAlgorithm.MQOM, "MQOM" },
+            { EnumKeygenAlgorithm.NaccacheStern, "NaccacheStern" },
+            { EnumKeygenAlgorithm.NH, "NH" },
+            { EnumKeygenAlgorithm.NTRU, "NTRU" },
+            { EnumKeygenAlgorithm.NTRULPRime, "NTRULPRime" },
+            { EnumKeygenAlgorithm.NTRUPlus, "NTRUPlus" },
+            { EnumKeygenAlgorithm.Picnic, "Picnic" },
+            { EnumKeygenAlgorithm.QRUOV, "QRUOV" },
+            { EnumKeygenAlgorithm.Rainbow, "Rainbow" },
+            { EnumKeygenAlgorithm.RSA, "RSA" },
+            { EnumKeygenAlgorithm.SABER, "SABER" },
+            { EnumKeygenAlgorithm.SDitH, "SDitH" },
+            { EnumKeygenAlgorithm.SLHDSA, "SLHDSA" },
+            { EnumKeygenAlgorithm.SM2, "SM2" },
+            { EnumKeygenAlgorithm.Snova, "Snova" },
+            { EnumKeygenAlgorithm.SNTRUPrime, "SNTRUPrime" },
+            { EnumKeygenAlgorithm.SPHINCS256, "SPHINCS256" },
+            { EnumKeygenAlgorithm.SPHINCSPlus, "SPHINCSPlus" },
+            { EnumKeygenAlgorithm.SQIsign, "SQIsign" },
+            { EnumKeygenAlgorithm.UOV, "UOV" },
+            { EnumKeygenAlgorithm.X25519, "X25519" },
+            { EnumKeygenAlgorithm.X448, "X448" },
+            { EnumKeygenAlgorithm.XMSS, "XMSS" },
+            { EnumKeygenAlgorithm.XMSSMT, "XMSSMT" },
+            { EnumKeygenAlgorithm.XWing, "XWing" },
+        });
+    }
+}
