@@ -6,7 +6,7 @@ using SecureEDM.Client.Presentation.Views;
 
 namespace SecureEDM.Client.Presentation;
 
-public partial class App : Application
+public partial class App : Avalonia.Application
 {
     public override void Initialize()
     {

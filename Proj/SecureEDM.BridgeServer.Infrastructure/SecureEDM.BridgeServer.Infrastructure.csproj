@@ -4,6 +4,11 @@
     <ProjectReference Include="..\SecureEDM.Common.Infrastructure\SecureEDM.Common.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Npgsql" />
+  </ItemGroup>
+
   <PropertyGroup>
   </PropertyGroup>
 

@@ -4,6 +4,10 @@
     <ProjectReference Include="..\SecureEDM.Common.Contracts\SecureEDM.Common.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.Cryptography" />
+  </ItemGroup>
+
   <PropertyGroup>
   </PropertyGroup>
 

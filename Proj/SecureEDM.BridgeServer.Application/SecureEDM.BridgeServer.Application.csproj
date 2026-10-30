@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SecureEDM.Common.Contracts\SecureEDM.Common.Contracts.csproj" />
+    <ProjectReference Include="..\SecureEDM.BridgeServer.Domain\SecureEDM.BridgeServer.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
