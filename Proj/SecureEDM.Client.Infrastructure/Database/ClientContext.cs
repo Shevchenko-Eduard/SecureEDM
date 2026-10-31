@@ -18,17 +18,9 @@ public partial class ClientContext : DbContext
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         base.ConfigureConventions(configurationBuilder);
-        var binaryConverter = new ValueConverter<ImmutableArray<byte>, byte[]>(
-            convertToProviderExpression: x => x.ToArray(),
-            convertFromProviderExpression: x => x.ToImmutableArray() 
-        );
-        var binaryComparer = new ValueComparer<ImmutableArray<byte>>(
-            equalsExpression: (x1, x2) => true,
-            hashCodeExpression: x => x.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-            snapshotExpression: x => x.ToImmutableArray()
-        );
+
         configurationBuilder
             .Properties<ImmutableArray<byte>>()
-                .HaveConversion<ImmutableArrayToArrayConverter<byte>, ImmutableArrayBitesComparer<byte>>();
+            .HaveConversion<ImmutableArrayToArrayConverter<byte>, ImmutableArrayBitesComparer<byte>>();
     }
 }
