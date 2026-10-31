@@ -1,0 +1,24 @@
+<Solution>
+  <Project Path="../Proj/SecureEDM.AuthServer.Application/SecureEDM.AuthServer.Application.csproj" />
+  <Project Path="../Proj/SecureEDM.AuthServer.Contracts/SecureEDM.AuthServer.Contracts.csproj" />
+  <Project Path="../Proj/SecureEDM.AuthServer.Domain/SecureEDM.AuthServer.Domain.csproj" />
+  <Project Path="../Proj/SecureEDM.AuthServer.Infrastructure/SecureEDM.AuthServer.Infrastructure.csproj" />
+  <Project Path="../Proj/SecureEDM.AuthServer.Presentation/SecureEDM.AuthServer.Presentation.csproj" />
+  <Project Path="../Proj/SecureEDM.BridgeServer.Application/SecureEDM.BridgeServer.Application.csproj" />
+  <Project Path="../Proj/SecureEDM.BridgeServer.Contracts/SecureEDM.BridgeServer.Contracts.csproj" />
+  <Project Path="../Proj/SecureEDM.BridgeServer.Domain/SecureEDM.BridgeServer.Domain.csproj" />
+  <Project Path="../Proj/SecureEDM.BridgeServer.Infrastructure/SecureEDM.BridgeServer.Infrastructure.csproj" />
+  <Project Path="../Proj/SecureEDM.BridgeServer.Presentation/SecureEDM.BridgeServer.Presentation.csproj" />
+  <Project Path="../Proj/SecureEDM.Client.Application/SecureEDM.Client.Application.csproj" />
+  <Project Path="../Proj/SecureEDM.Client.Contracts/SecureEDM.Client.Contracts.csproj" />
+  <Project Path="../Proj/SecureEDM.Client.Domain/SecureEDM.Client.Domain.csproj" />
+  <Project Path="../Proj/SecureEDM.Client.Infrastructure/SecureEDM.Client.Infrastructure.csproj" />
+  <Project Path="../Proj/SecureEDM.Client.Presentation/SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.csproj" />
+  <Project Path="../Proj/SecureEDM.Common.Contracts/SecureEDM.Common.Contracts.csproj" />
+  <Project Path="../Proj/SecureEDM.Common.Domain/SecureEDM.Common.Domain.csproj" />
+  <Project Path="../Proj/SecureEDM.Common.Infrastructure/SecureEDM.Common.Infrastructure.csproj" />
+  <Project Path="SecureEDM.AuthServer/SecureEDM.AuthServer.csproj" />
+  <Project Path="SecureEDM.BridgeServer/SecureEDM.BridgeServer.csproj" />
+  <Project Path="SecureEDM.Client/SecureEDM.Client.csproj" />
+  <Project Path="SecureEDM.Common/SecureEDM.Common.csproj" />
+</Solution>
