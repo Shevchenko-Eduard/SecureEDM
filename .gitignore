@@ -392,7 +392,6 @@ FodyWeavers.xsd
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-*.code-workspace
 
 # Official VS Code C# Dev Kit Extension exclusion
 *.lscache

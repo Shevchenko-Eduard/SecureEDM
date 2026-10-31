@@ -1,0 +1,22 @@
+{
+    "folders": [
+        {
+            "path": "../Doc"
+        },
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/SecureEDM.AuthServer.*": true,
+            "**/SecureEDM.BridgeServer.*": true,
+            "**/.git*": true,
+            "**/bin": true,
+            "**/obj": true,
+
+            "**/SecureEDM.Client.Presentation": true,
+        },
+        "dotnet.defaultSolution": "SecureEDM.slnx"
+    }
+}
