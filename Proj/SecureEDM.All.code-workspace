@@ -5,6 +5,6 @@
         }
     ],
     "settings": {
-        "dotnet.defaultSolution": "Proj/SecureEDM.slnx"
+        "dotnet.defaultSolution": "Test/SecureEDM.Test.slnx"
     }
 }

@@ -14,6 +14,6 @@
 
             // "**/SecureEDM.Client.Presentation": true,
         },
-        "dotnet.defaultSolution": "Proj/SecureEDM.slnx"
+        "dotnet.defaultSolution": "Test/SecureEDM.Test.slnx"
     }
 }
