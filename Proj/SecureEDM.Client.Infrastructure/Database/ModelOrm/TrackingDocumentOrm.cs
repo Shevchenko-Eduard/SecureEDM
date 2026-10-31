@@ -8,6 +8,6 @@ public class TrackingDocumentOrm : TrackingDocument
 {
     protected TrackingDocumentOrm(IClock clock) : base(clock) { }
     private TrackingDocumentOrm() : base(GlobalClock.Clock) { }
-    public HashOfDocumentOrm? HashOfDocument { get; private set; }
-    public SignatureOrm? Signature { get; set; }
+    public ICollection<HashOfDocumentOrm>? HashOfDocuments { get; private set; }
+    public ICollection<SignatureOrm>? Signatures { get; set; }
 }
