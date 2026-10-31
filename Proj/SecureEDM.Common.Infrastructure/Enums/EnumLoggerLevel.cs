@@ -1,4 +1,4 @@
-namespace SecureEDM.Common.Infrastructure;
+namespace SecureEDM.Common.Infrastructure.Enums;
 
 public enum EnumLoggerLevel
 {

@@ -1,6 +1,7 @@
 using SecureEDM.Common.Domain.Enums;
+using SecureEDM.Common.Infrastructure.Interfaces;
 
-namespace SecureEDM.Common.Infrastructure;
+namespace SecureEDM.Common.Infrastructure.Cryptography.Enums;
 
 public class MapperEnumDigestAlgorithm : IMapperEnum<EnumDigestAlgorithm>
 {

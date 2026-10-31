@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace SecureEDM.Common.Infrastructure;
+namespace SecureEDM.Common.Infrastructure.Interfaces;
 
 public abstract class IMapperEnum<TEnum> where TEnum : struct, Enum
 {
