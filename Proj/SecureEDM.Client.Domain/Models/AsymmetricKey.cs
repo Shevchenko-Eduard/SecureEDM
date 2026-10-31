@@ -6,7 +6,7 @@ namespace SecureEDM.Client.Domain.Models;
 
 public class AsymmetricKey : IHasId<int>, IHasRevocable<EnumRevokedReason>, IHasCreated
 {
-    private readonly IClock _clock;
+    protected readonly IClock _clock;
     public int Id
     {
         get; init
@@ -36,15 +36,17 @@ public class AsymmetricKey : IHasId<int>, IHasRevocable<EnumRevokedReason>, IHas
     public EnumRevokedReason RevokedReason { get; private set; }
     public EnumKeygenAlgorithm KeygenAlgorithm { get; init; }
 
-    public AsymmetricKey(
-        IClock clock,
-        EnumKeygenAlgorithm keygenAlgorithm
-    )
-    {
-        _clock = clock;
-        KeygenAlgorithm = keygenAlgorithm;
-        CreatedAt = _clock.Now;
-    }
+    // public AsymmetricKey(
+    //     IClock clock,
+    //     EnumKeygenAlgorithm keygenAlgorithm
+    // )
+    // {
+    //     _clock = clock;
+    //     KeygenAlgorithm = keygenAlgorithm;
+    //     CreatedAt = _clock.Now;
+    // }
+
+    protected AsymmetricKey(IClock clock) { _clock = clock; }
 
     public void Revoke(EnumRevokedReason reason)
     {

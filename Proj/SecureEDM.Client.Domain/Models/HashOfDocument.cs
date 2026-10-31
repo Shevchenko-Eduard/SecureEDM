@@ -7,7 +7,7 @@ namespace SecureEDM.Client.Domain.Models;
 
 public class HashOfDocument : IHasId<int>, IHasCreated, IHasRevocable<EnumRevokedReason>
 {
-    private readonly IClock _clock;
+    protected readonly IClock _clock;
     public int Id
     {
         get; init
@@ -62,19 +62,20 @@ public class HashOfDocument : IHasId<int>, IHasCreated, IHasRevocable<EnumRevoke
         }
     }
     public bool IsPrimary { get; private set; }
-    public HashOfDocument(
-        IClock clock, byte[] hash, int documentId,
-        EnumDigestAlgorithm algorithm,
-        int? remoteAuthorId = null, bool isPrimary = false)
-    {
-        _clock = clock;
-        Hash = [.. hash];
-        DocumentId = documentId;
-        HashedAlgorithm = algorithm;
-        RemoteAuthorId = remoteAuthorId;
-        IsPrimary = isPrimary;
-        CreatedAt = _clock.Now;
-    }
+    // public HashOfDocument(
+    //     IClock clock, byte[] hash, int documentId,
+    //     EnumDigestAlgorithm algorithm,
+    //     int? remoteAuthorId = null, bool isPrimary = false)
+    // {
+    //     _clock = clock;
+    //     Hash = [.. hash];
+    //     DocumentId = documentId;
+    //     HashedAlgorithm = algorithm;
+    //     RemoteAuthorId = remoteAuthorId;
+    //     IsPrimary = isPrimary;
+    //     CreatedAt = _clock.Now;
+    // }
+    protected HashOfDocument(IClock clock) { _clock = clock; }
 
     public void Revoke(EnumRevokedReason reason)
     {

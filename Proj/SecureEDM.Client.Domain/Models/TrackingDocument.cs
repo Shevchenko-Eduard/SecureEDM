@@ -6,7 +6,7 @@ namespace SecureEDM.Client.Domain.Models;
 
 public class TrackingDocument : IHasId<int>, IHasCreated, IHasSoftDelete
 {
-    private readonly IClock _clock;
+    protected readonly IClock _clock;
     public int Id
     {
         get; init
@@ -22,7 +22,7 @@ public class TrackingDocument : IHasId<int>, IHasCreated, IHasSoftDelete
             ExceptionNullableValue.CallValueIsNull(value);
             field = value;
         }
-    }
+    } = null!;
     public EnumStatusTracking? StatusTracking
     {
         get; set
@@ -65,12 +65,13 @@ public class TrackingDocument : IHasId<int>, IHasCreated, IHasSoftDelete
             ExceptionNullableValue.CallValueIsNull(value);
             field = value;
         }
-    }
-    public TrackingDocument(IClock clock, string path, string extension)
-    {
-        _clock = clock;
-        Path = path;
-        CreatedAt = _clock.Now;
-        FixedExtension = extension;
-    }
+    } = null!;
+    // public TrackingDocument(IClock clock, string path, string extension)
+    // {
+    //     _clock = clock;
+    //     Path = path;
+    //     CreatedAt = _clock.Now;
+    //     FixedExtension = extension;
+    // }
+    protected TrackingDocument(IClock clock) { _clock = clock; }
 }

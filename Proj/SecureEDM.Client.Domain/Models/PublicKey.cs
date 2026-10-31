@@ -6,7 +6,7 @@ namespace SecureEDM.Client.Domain.Models;
 
 public class PublicKey : IHasId<int>
 {
-    private readonly IClock _clock;
+    protected readonly IClock _clock;
     public int Id
     {
         get; init
@@ -48,18 +48,19 @@ public class PublicKey : IHasId<int>
             field = value;
         }
     }
-    public PublicKey(
-        IClock clock,
-        int asymmetricKeyId,
-        byte[] keyValue,
-        byte[]? attestation = null,
-        int? remoteOwnerId = null
-    )
-    {
-        _clock = clock;
-        AsymmetricKeyId = asymmetricKeyId;
-        KeyValue = [.. keyValue];
-        if (attestation != null) Attestation = [.. attestation];
-        RemoteOwnerId = remoteOwnerId;
-    }
+    // public PublicKey(
+    //     IClock clock,
+    //     int asymmetricKeyId,
+    //     byte[] keyValue,
+    //     byte[]? attestation = null,
+    //     int? remoteOwnerId = null
+    // )
+    // {
+    //     _clock = clock;
+    //     AsymmetricKeyId = asymmetricKeyId;
+    //     KeyValue = [.. keyValue];
+    //     if (attestation != null) Attestation = [.. attestation];
+    //     RemoteOwnerId = remoteOwnerId;
+    // }
+    protected PublicKey(IClock clock) { _clock = clock; }
 }

@@ -7,7 +7,7 @@ namespace SecureEDM.Client.Domain.Models;
 
 public class Signature : IHasId<int>, IHasRevocable<EnumRevokedReason>
 {
-    private readonly IClock _clock;
+    protected readonly IClock _clock;
     public int Id
     {
         get; init
@@ -68,19 +68,20 @@ public class Signature : IHasId<int>, IHasRevocable<EnumRevokedReason>
         }
     }
     public EnumSignedAlgorithm SignedAlgorithm { get; init; }
-    public Signature(
-        IClock clock, int documentId, int publicKeyId,
-        byte[] signature, EnumSignedAlgorithm signedAlgorithm,
-        DateTimeOffset signedAt, int? remoteAuthorId = null)
-    {
-        _clock = clock;
-        SignedAlgorithm = signedAlgorithm;
-        DocumentId = documentId;
-        PublicKeyId = publicKeyId;
-        SignatureValue = [.. signature];
-        SignedAt = signedAt;
-        RemoteAuthorId = remoteAuthorId;
-    }
+    // public Signature(
+    //     IClock clock, int documentId, int publicKeyId,
+    //     byte[] signature, EnumSignedAlgorithm signedAlgorithm,
+    //     DateTimeOffset signedAt, int? remoteAuthorId = null)
+    // {
+    //     _clock = clock;
+    //     SignedAlgorithm = signedAlgorithm;
+    //     DocumentId = documentId;
+    //     PublicKeyId = publicKeyId;
+    //     SignatureValue = [.. signature];
+    //     SignedAt = signedAt;
+    //     RemoteAuthorId = remoteAuthorId;
+    // }
+    protected Signature(IClock clock) { _clock = clock; }
     public void Revoke(EnumRevokedReason reason)
     {
         ExceptionRevocation.CallAlreadyRevoked(this);

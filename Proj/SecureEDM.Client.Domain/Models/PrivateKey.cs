@@ -6,7 +6,7 @@ namespace SecureEDM.Client.Domain.Models;
 
 public class PrivateKey : IHasId<int>
 {
-    private readonly IClock _clock;
+    protected readonly IClock _clock;
     public int Id
     {
         get; init
@@ -31,14 +31,15 @@ public class PrivateKey : IHasId<int>
             field = value;
         }
     }
-    public PrivateKey(
-        IClock clock,
-        int asymmetricKeyId,
-        byte[] keyValue
-    )
-    {
-        _clock = clock;
-        AsymmetricKeyId = asymmetricKeyId;
-        KeyValue = [.. keyValue];
-    }
+    // public PrivateKey(
+    //     IClock clock,
+    //     int asymmetricKeyId,
+    //     byte[] keyValue
+    // )
+    // {
+    //     _clock = clock;
+    //     AsymmetricKeyId = asymmetricKeyId;
+    //     KeyValue = [.. keyValue];
+    // }
+    protected PrivateKey(IClock clock) { _clock = clock; }
 }
