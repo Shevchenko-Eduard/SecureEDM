@@ -1,10 +1,7 @@
 {
     "folders": [
         {
-            "path": "../Doc"
-        },
-        {
-            "path": "."
+            "path": ".."
         }
     ],
     "settings": {
@@ -15,6 +12,6 @@
             "**/bin": true,
             "**/obj": true,
         },
-        "dotnet.defaultSolution": "SecureEDM.slnx"
+        "dotnet.defaultSolution": "Proj/SecureEDM.slnx"
     }
 }
