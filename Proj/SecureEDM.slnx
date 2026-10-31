@@ -11,14 +11,17 @@
     <Project Path="SecureEDM.Client.Presentation/SecureEDM.Client.Presentation/SecureEDM.Client.Presentation.csproj" />
   </Folder>
   <Project Path="SecureEDM.AuthServer.Application/SecureEDM.AuthServer.Application.csproj" />
+  <Project Path="SecureEDM.AuthServer.Contracts/SecureEDM.AuthServer.Contracts.csproj" />
   <Project Path="SecureEDM.AuthServer.Domain/SecureEDM.AuthServer.Domain.csproj" />
   <Project Path="SecureEDM.AuthServer.Infrastructure/SecureEDM.AuthServer.Infrastructure.csproj" />
   <Project Path="SecureEDM.AuthServer.Presentation/SecureEDM.AuthServer.Presentation.csproj" />
   <Project Path="SecureEDM.BridgeServer.Application/SecureEDM.BridgeServer.Application.csproj" />
+  <Project Path="SecureEDM.BridgeServer.Contracts/SecureEDM.BridgeServer.Contracts.csproj" />
   <Project Path="SecureEDM.BridgeServer.Domain/SecureEDM.BridgeServer.Domain.csproj" />
   <Project Path="SecureEDM.BridgeServer.Infrastructure/SecureEDM.BridgeServer.Infrastructure.csproj" />
   <Project Path="SecureEDM.BridgeServer.Presentation/SecureEDM.BridgeServer.Presentation.csproj" />
   <Project Path="SecureEDM.Client.Application/SecureEDM.Client.Application.csproj" />
+  <Project Path="SecureEDM.Client.Contracts/SecureEDM.Client.Contracts.csproj" />
   <Project Path="SecureEDM.Client.Domain/SecureEDM.Client.Domain.csproj" />
   <Project Path="SecureEDM.Client.Infrastructure/SecureEDM.Client.Infrastructure.csproj" />
   <Project Path="SecureEDM.Common.Contracts/SecureEDM.Common.Contracts.csproj" />

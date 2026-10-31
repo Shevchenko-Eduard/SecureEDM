@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\SecureEDM.Common.Contracts\SecureEDM.Common.Contracts.csproj" />
+    <ProjectReference Include="..\SecureEDM.AuthServer.Domain\SecureEDM.AuthServer.Domain.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+</Project>

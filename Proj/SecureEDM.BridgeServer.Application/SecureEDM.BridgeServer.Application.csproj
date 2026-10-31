@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\SecureEDM.Common.Contracts\SecureEDM.Common.Contracts.csproj" />
-    <ProjectReference Include="..\SecureEDM.BridgeServer.Domain\SecureEDM.BridgeServer.Domain.csproj" />
+    <ProjectReference Include="..\SecureEDM.BridgeServer.Contracts\SecureEDM.BridgeServer.Contracts.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

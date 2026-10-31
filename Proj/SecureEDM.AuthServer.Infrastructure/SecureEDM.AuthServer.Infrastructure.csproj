@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\SecureEDM.Common.Contracts\SecureEDM.Common.Contracts.csproj" />
     <ProjectReference Include="..\SecureEDM.Common.Infrastructure\SecureEDM.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\SecureEDM.AuthServer.Contracts\SecureEDM.AuthServer.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
