@@ -1,10 +1,16 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using SecureEDM.Common.Domain.Models.ValueObject;
+using SecureEDM.Common.Infrastructure;
 
 namespace SecureEDM.Client.Infrastructure.Database;
 
 public class ClientContextTest
 {
+    public ClientContextTest()
+    {
+        GlobalClock.SetClock(new Clock());
+    }
     private async Task<(DbContextOptions<ClientContext> Options, SqliteConnection Connection)> CreateInMemoryDatabase()
     {
         var connection = new SqliteConnection(new SqliteInMemoryConnectionString().GetConnectionString());

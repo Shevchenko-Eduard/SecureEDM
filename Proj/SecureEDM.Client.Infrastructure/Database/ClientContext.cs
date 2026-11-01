@@ -1,7 +1,5 @@
 using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecureEDM.Client.Infrastructure.Database.Comparers;
 using SecureEDM.Client.Infrastructure.Database.Converters;
 
@@ -14,6 +12,8 @@ public partial class ClientContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientContext).Assembly);
     }
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
