@@ -14,8 +14,8 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          # - windows-latest
-          # - macos-latest
+          - windows-latest
+          - macos-latest
         configuration:
           - Debug
           - Release
@@ -32,13 +32,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
-          cache: true
-
-      - name: Execute restore packages
-        run: dotnet restore ${{ env.Test_Solution_Path }}
-
-      - name: Execute build projects
-        run: dotnet build ${{ env.Test_Solution_Path }} -c ${{ matrix.configuration }}
 
       - name: Execute unit tests
-        run: dotnet test ${{ env.Test_Solution_Path }} -c ${{ matrix.configuration }} --no-build
+        run: dotnet test ${{ env.Test_Solution_Path }} -c ${{ matrix.configuration }}
