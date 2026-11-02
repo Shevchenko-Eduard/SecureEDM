@@ -5,9 +5,10 @@ namespace SecureEDM.Common.Infrastructure.Cryptography.Enums;
 
 public class MapperEnumKeygenAlgorithm : IMapperEnum<EnumKeygenAlgorithm>
 {
-    static MapperEnumKeygenAlgorithm()
-    {
-        IdToName = new(new Dictionary<EnumKeygenAlgorithm, string>{
+    public static MapperEnumKeygenAlgorithm Mapper = new();
+
+    public MapperEnumKeygenAlgorithm() : base(
+        new(new Dictionary<EnumKeygenAlgorithm, string>{
             { EnumKeygenAlgorithm.AIMer, "AIMer" },
             { EnumKeygenAlgorithm.BIKE, "BIKE" },
             { EnumKeygenAlgorithm.BLS, "BLS" },
@@ -61,6 +62,6 @@ public class MapperEnumKeygenAlgorithm : IMapperEnum<EnumKeygenAlgorithm>
             { EnumKeygenAlgorithm.XMSS, "XMSS" },
             { EnumKeygenAlgorithm.XMSSMT, "XMSSMT" },
             { EnumKeygenAlgorithm.XWing, "XWing" },
-        });
-    }
+        }))
+    { }
 }

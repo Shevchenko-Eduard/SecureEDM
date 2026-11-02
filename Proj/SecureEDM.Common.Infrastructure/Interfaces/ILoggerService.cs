@@ -1,3 +1,4 @@
+using Org.BouncyCastle.Crypto.Digests;
 using SecureEDM.Common.Infrastructure.Enums;
 
 namespace SecureEDM.Common.Infrastructure.Interfaces;

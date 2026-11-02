@@ -5,9 +5,9 @@ namespace SecureEDM.Common.Infrastructure.Cryptography.Enums;
 
 public class MapperEnumDigestAlgorithm : IMapperEnum<EnumDigestAlgorithm>
 {
-    static MapperEnumDigestAlgorithm()
-    {
-        IdToName = new(new Dictionary<EnumDigestAlgorithm, string>{
+    public static MapperEnumDigestAlgorithm Mapper = new();
+    public MapperEnumDigestAlgorithm() : base(
+        new(new Dictionary<EnumDigestAlgorithm, string>{
             { EnumDigestAlgorithm.MD2, "MD2" },
             { EnumDigestAlgorithm.MD4, "MD4" },
             { EnumDigestAlgorithm.MD5, "MD5" },
@@ -49,6 +49,6 @@ public class MapperEnumDigestAlgorithm : IMapperEnum<EnumDigestAlgorithm>
             { EnumDigestAlgorithm.DSTU7564_256, "DSTU7564-256" },
             { EnumDigestAlgorithm.DSTU7564_384, "DSTU7564-384" },
             { EnumDigestAlgorithm.DSTU7564_512, "DSTU7564-512" },
-        });
-    }
+        }))
+    { }
 }

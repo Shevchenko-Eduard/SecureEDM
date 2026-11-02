@@ -5,9 +5,9 @@ namespace SecureEDM.Common.Infrastructure.Cryptography.Enums;
 
 public class MapperEnumSignedAlgorithm : IMapperEnum<EnumSignedAlgorithm>
 {
-    static MapperEnumSignedAlgorithm()
-    {
-        IdToName = new(new Dictionary<EnumSignedAlgorithm, string>{
+    public static MapperEnumSignedAlgorithm Mapper = new();
+    public MapperEnumSignedAlgorithm() : base(
+        new(new Dictionary<EnumSignedAlgorithm, string>{
             { EnumSignedAlgorithm.MD2withRSA, "MD2withRSA" },
             { EnumSignedAlgorithm.MD4withRSA, "MD4withRSA" },
             { EnumSignedAlgorithm.MD5withRSA, "MD5withRSA" },
@@ -76,6 +76,6 @@ public class MapperEnumSignedAlgorithm : IMapperEnum<EnumSignedAlgorithm>
             { EnumSignedAlgorithm.ECGOST3410_2012_512, "ECGOST3410-2012-512" },
             { EnumSignedAlgorithm.SHA256withSM2, "SHA256withSM2" },
             { EnumSignedAlgorithm.SM3withSM2, "SM3withSM2" },
-        });
-    }
+        }))
+    { }
 }
