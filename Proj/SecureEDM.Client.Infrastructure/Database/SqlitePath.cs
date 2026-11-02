@@ -1,6 +1,3 @@
-using System.Security.Cryptography;
-using SecureEDM.Client.Infrastructure.Database;
-
 namespace SecureEDM.Client.Infrastructure.Database;
 
 public static class SqlitePath

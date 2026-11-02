@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using SecureEDM.Client.Contracts.Interfaces.Repositories;
 using SecureEDM.Common.Domain.Interfaces;
-using SecureEDM.Common.Infrastructure;
 
 namespace SecureEDM.Client.Infrastructure.Database;
 

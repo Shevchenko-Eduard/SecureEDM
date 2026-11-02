@@ -1,4 +1,3 @@
-using System.Numerics;
 using SecureEDM.Common.Domain.Models.Interfaces;
 
 public class ExceptionRevocation(string? message = null, Exception? innerException = null) : Exception(message, innerException)

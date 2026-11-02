@@ -1,4 +1,3 @@
-using Org.BouncyCastle.Security;
 using SecureEDM.Common.Domain.Interfaces;
 
 namespace SecureEDM.Common.Infrastructure;

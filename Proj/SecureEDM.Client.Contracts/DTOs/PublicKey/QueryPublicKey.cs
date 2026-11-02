@@ -1,6 +1,4 @@
 using SecureEDM.Client.Contracts.Interfaces;
-using SecureEDM.Common.Domain.Enums;
-using SecureEDM.Common.Domain.Models.ValueObject;
 
 namespace SecureEDM.Client.Contracts.DTOs.PublicKey;
 

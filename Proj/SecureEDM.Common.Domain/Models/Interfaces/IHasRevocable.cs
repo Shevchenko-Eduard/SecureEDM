@@ -1,5 +1,3 @@
-using SecureEDM.Common.Domain.Interfaces;
-
 namespace SecureEDM.Common.Domain.Models.Interfaces;
 
 public interface IHasRevocable<TReason> where TReason : Enum
