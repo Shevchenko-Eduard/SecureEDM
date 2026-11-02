@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="BouncyCastle.Cryptography" />
+    <PackageReference Include="Mapster.DependencyInjection" />
+    <!-- <PackageReference Include="Riok.Mapperly" /> -->
   </ItemGroup>
 
   <PropertyGroup>
