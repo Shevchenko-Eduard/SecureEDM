@@ -1,6 +1,6 @@
 namespace SecureEDM.Client.Contracts.Interfaces.Repositories.Base;
 
-public interface IHasRevokeRepo<TEntiry>
+public interface IHasRevokeRepo<TDto>
 {
-    Task RevokeAsync(TEntiry entiry, CancellationToken token = default);
+    Task RevokeAsync(TDto dto, CancellationToken token = default);
 }

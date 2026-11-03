@@ -1,6 +1,6 @@
 namespace SecureEDM.Client.Contracts.Interfaces.Repositories.Base;
 
-public interface IHasCreateRepo<TEntiry>
+public interface IHasCreateRepo<TDto>
 {
-    Task CreateAsync(TEntiry entiry, CancellationToken token = default);
+    Task CreateAsync(TDto dto, CancellationToken token = default);
 }

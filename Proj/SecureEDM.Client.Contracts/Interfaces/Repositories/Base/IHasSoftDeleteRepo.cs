@@ -1,6 +1,6 @@
 namespace SecureEDM.Client.Contracts.Interfaces.Repositories.Base;
 
-public interface IHasSoftDeleteRepo<TEntiry>
+public interface IHasSoftDeleteRepo<TDto>
 {
-    Task SoftDeleteAsync(TEntiry entiry, CancellationToken token = default);
+    Task SoftDeleteAsync(TDto dto, CancellationToken token = default);
 }

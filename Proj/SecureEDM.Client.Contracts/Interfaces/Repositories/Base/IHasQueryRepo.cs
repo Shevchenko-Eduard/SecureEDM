@@ -1,6 +1,6 @@
 namespace SecureEDM.Client.Contracts.Interfaces.Repositories.Base;
 
-public interface IHasQueryRepo<TQuery>
+public interface IHasQueryRepo<TDto, TResult>
 {
-    Task QueryAsync(TQuery query, CancellationToken token = default);
+    Task<TResult> QueryAsync(TDto dto, CancellationToken token = default);
 }

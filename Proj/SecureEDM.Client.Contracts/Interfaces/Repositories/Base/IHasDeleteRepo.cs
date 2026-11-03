@@ -1,6 +1,6 @@
 namespace SecureEDM.Client.Contracts.Interfaces.Repositories.Base;
 
-public interface IHasDeleteRepo<TId>
+public interface IHasDeleteRepo<TDto>
 {
-    Task DeleteAsync(TId id, CancellationToken token = default);
+    Task DeleteAsync(TDto dto, CancellationToken token = default);
 }
