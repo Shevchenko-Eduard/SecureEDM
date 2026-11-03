@@ -27,20 +27,20 @@ public class UnitOfWorkClient(
 
     public ITrackingDocumentRepo TrackingDocument => trackingDocument;
 
-    private ClientContext _context => context;
+    private readonly ClientContext _context = context;
 
-    public async Task ExecuteInTransactionAsync(Func<Task> action, CancellationToken token = default)
+    public async Task ExecuteInTransactionAsync(Func<CancellationToken, Task> action, CancellationToken token = default)
     {
         var strategy = _context.Database.CreateExecutionStrategy();
 
         await strategy.ExecuteAsync(async () =>
             {
-                await using var transaction = await context.Database.BeginTransactionAsync(token);
+                await using var transaction = await _context.Database.BeginTransactionAsync(token);
 
                 try
                 {
-                    await action();
-                    await context.SaveChangesAsync(token);
+                    await action(token);
+                    await _context.SaveChangesAsync(token);
                     await transaction.CommitAsync(token);
                 }
                 catch
@@ -52,18 +52,18 @@ public class UnitOfWorkClient(
         );
     }
 
-    public async Task<T> ExecuteInTransactionAsync<T>(Func<Task<T>> action, CancellationToken token = default)
+    public async Task<T> ExecuteInTransactionAsync<T>(Func<CancellationToken, Task<T>> action, CancellationToken token = default)
     {
         var strategy = _context.Database.CreateExecutionStrategy();
 
         return await strategy.ExecuteAsync(async () =>
             {
-                await using var transaction = await context.Database.BeginTransactionAsync(token);
+                await using var transaction = await _context.Database.BeginTransactionAsync(token);
 
                 try
                 {
-                    var result = await action();
-                    await context.SaveChangesAsync(token);
+                    var result = await action(token);
+                    await _context.SaveChangesAsync(token);
                     await transaction.CommitAsync(token);
                     return result;
                 }
