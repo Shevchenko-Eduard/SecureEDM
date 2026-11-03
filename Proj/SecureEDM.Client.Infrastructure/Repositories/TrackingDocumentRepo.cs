@@ -6,6 +6,8 @@ using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;
 using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Domain.Enums;
+using System.Collections.ObjectModel;
+using SecureEDM.Client.Infrastructure.Repositories.Tools;
 
 namespace SecureEDM.Client.Infrastructure.Repositories;
 
@@ -31,9 +33,32 @@ public class TrackingDocumentRepo(
         _context.TrackingDocuments.Remove(entity);
     }
 
-    public Task<TrackingDocument> QueryAsync(QueryTrackingDocument dto, CancellationToken token = default)
+    public async Task<ReadOnlySet<TrackingDocument>> QueryAsync(QueryTrackingDocument dto, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var query = _context.TrackingDocuments.AsQueryable();
+
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.Id, value => q => value.Contains(q.Id));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.Path, value => q => value.Contains(q.Path));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.StatusTracking, value => q => value.Contains(q.StatusTracking));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.FixedExtension, value => q => value.Contains(q.FixedExtension));
+
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.CreatedAt,
+            actionTo: value => q => value >= q.CreatedAt,
+            actionFrom: value => q => value <= q.CreatedAt);
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.DeleteAt,
+            actionTo: value => q => value >= q.DeleteAt,
+            actionFrom: value => q => value <= q.DeleteAt);
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.LastSync,
+            actionTo: value => q => value >= q.LastSync,
+            actionFrom: value => q => value <= q.LastSync);
+
+
+        QueryTools.ExecuteIfNotNull(ref query, dto.Top, value => query.Take(value));
+        QueryTools.ExecuteIfNotNull(ref query, dto.Skip, value => query.Skip(value));
+
+        var res = await query.ToArrayAsync();
+
+        return [.. res.Select(_mapper.To<TrackingDocument>().From)];
     }
 
     public async Task SoftDeleteAsync(SoftDeleteTrackingDocument dto, CancellationToken token = default)

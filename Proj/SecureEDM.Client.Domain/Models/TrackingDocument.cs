@@ -24,7 +24,7 @@ public class TrackingDocument : IHasId<int>, IHasCreated, IHasSoftDelete
             field = value;
         }
     } = null!;
-    public EnumStatusTracking? StatusTracking
+    public EnumStatusTracking StatusTracking
     {
         get; set
         {

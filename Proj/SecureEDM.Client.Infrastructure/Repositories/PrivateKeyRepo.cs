@@ -5,6 +5,8 @@ using SecureEDM.Client.Contracts.Interfaces.Repositories;
 using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using SecureEDM.Client.Infrastructure.Repositories.Tools;
 
 namespace SecureEDM.Client.Infrastructure.Repositories;
 
@@ -30,8 +32,18 @@ public class PrivateKeyRepo(
         _context.PrivateKeys.Remove(entity);
     }
 
-    public Task<PrivateKey> QueryAsync(QueryPrivateKey dto, CancellationToken token = default)
+    public async Task<ReadOnlySet<PrivateKey>> QueryAsync(QueryPrivateKey dto, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var query = _context.PrivateKeys.AsQueryable();
+
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.Id, value => q => value.Contains(q.Id));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.AsymmetricKeyId, value => q => value.Contains(q.AsymmetricKeyId));
+        
+        QueryTools.ExecuteIfNotNull(ref query, dto.Top, value => query.Take(value));
+        QueryTools.ExecuteIfNotNull(ref query, dto.Skip, value => query.Skip(value));
+
+        var res = await query.ToArrayAsync();
+
+        return [.. res.Select(_mapper.To<PrivateKey>().From)];
     }
 }

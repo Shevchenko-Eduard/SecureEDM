@@ -1,9 +1,12 @@
+using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Contracts.DTOs.AsymmetricKey;
 using SecureEDM.Client.Contracts.Interfaces.Repositories;
 using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;
+using SecureEDM.Client.Infrastructure.Repositories.Tools;
 using SecureEDM.Common.Contracts.Interfaces;
 
 namespace SecureEDM.Client.Infrastructure.Repositories;
@@ -30,9 +33,27 @@ public class AsymmetricKeyRepo(
         _context.AsymmetricKeys.Remove(entity);
     }
 
-    public Task<AsymmetricKey> QueryAsync(QueryAsymmetricKey dto, CancellationToken token = default)
+    public async Task<ReadOnlySet<AsymmetricKey>> QueryAsync(QueryAsymmetricKey dto, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var query = _context.AsymmetricKeys.AsQueryable();
+
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.Id, value => q => value.Contains(q.Id));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.RevokedReason, value => q => value.Contains(q.RevokedReason));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.KeygenAlgorithm, value => q => value.Contains(q.KeygenAlgorithm));
+
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.CreatedAt,
+            actionTo: value => q => value >= q.CreatedAt,
+            actionFrom: value => q => value <= q.CreatedAt);
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.RevokedAt,
+            actionTo: value => q => value >= q.RevokedAt,
+            actionFrom: value => q => value <= q.RevokedAt);
+
+        QueryTools.ExecuteIfNotNull(ref query, dto.Top, value => query.Take(value));
+        QueryTools.ExecuteIfNotNull(ref query, dto.Skip, value => query.Skip(value));
+
+        var res = await query.ToArrayAsync();
+
+        return [.. res.Select(_mapper.To<AsymmetricKey>().From)];
     }
 
     public async Task RevokeAsync(RevokeAsymmetricKey dto, CancellationToken token = default)

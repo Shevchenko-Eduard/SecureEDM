@@ -12,5 +12,5 @@ public class QueryHashOfDocument : IPagination
     public Range<DateTimeOffset>? RevokedAt { get; set; }
     public List<EnumRevokedReason>? RevokedReason { get; set; }
     public List<EnumDigestAlgorithm>? HashedAlgorithm { get; set; }
-    public bool IsPrimary { get; set; }
+    public bool? IsPrimary { get; set; }
 }

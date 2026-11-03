@@ -5,6 +5,8 @@ using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using SecureEDM.Client.Infrastructure.Repositories.Tools;
 
 namespace SecureEDM.Client.Infrastructure.Repositories;
 
@@ -30,9 +32,30 @@ public class SignatureRepo(
         _context.Signatures.Remove(entity);
     }
 
-    public Task<Signature> QueryAsync(QuerySignature dto, CancellationToken token = default)
+    public async Task<ReadOnlySet<Signature>> QueryAsync(QuerySignature dto, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var query = _context.Signatures.AsQueryable();
+
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.Id, value => q => value.Contains(q.Id));
+        QueryTools.ExecuteIfNotNull(ref query, dto.RemoteAuthorId, value => query.Where(q => q.RemoteAuthorId != null && value.Contains((int)q.RemoteAuthorId)));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.DocumentId, value => q => value.Contains(q.DocumentId));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.PublicKeyId, value => q => value.Contains(q.PublicKeyId));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.RevokedReason, value => q => value.Contains(q.RevokedReason));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.SignedAlgorithm, value => q => value.Contains(q.SignedAlgorithm));
+        
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.SignedAt,
+            actionTo: value => q => value >= q.SignedAt,
+            actionFrom: value => q => value <= q.SignedAt);
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.RevokedAt,
+            actionTo: value => q => value >= q.RevokedAt,
+            actionFrom: value => q => value <= q.RevokedAt);
+
+        QueryTools.ExecuteIfNotNull(ref query, dto.Top, value => query.Take(value));
+        QueryTools.ExecuteIfNotNull(ref query, dto.Skip, value => query.Skip(value));
+
+        var res = await query.ToArrayAsync();
+
+        return [.. res.Select(_mapper.To<Signature>().From)];
     }
 
     public async Task RevokeAsync(RevokeSignature dto, CancellationToken token = default)
