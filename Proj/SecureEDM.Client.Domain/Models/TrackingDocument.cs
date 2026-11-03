@@ -1,4 +1,5 @@
 using SecureEDM.Client.Domain.Enums;
+using SecureEDM.Common.Domain.Exceptions;
 using SecureEDM.Common.Domain.Interfaces;
 using SecureEDM.Common.Domain.Models.Interfaces;
 
@@ -74,4 +75,12 @@ public class TrackingDocument : IHasId<int>, IHasCreated, IHasSoftDelete
     //     FixedExtension = extension;
     // }
     protected TrackingDocument(IClock clock) { _clock = clock; }
+
+    public void SoftDelete() => SoftDelete(_clock.Now);
+
+    public void SoftDelete(DateTimeOffset deleteAt)
+    {
+        ExceptionDeletion.CallSoftDeletedAlreadyDo(this);
+        DeleteAt = DeleteAt;
+    }
 }

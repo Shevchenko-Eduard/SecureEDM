@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.ComponentModel;
+using SecureEDM.Common.Domain.Exceptions;
 using SecureEDM.Common.Domain.Interfaces;
 using SecureEDM.Common.Domain.Models.Interfaces;
 
@@ -63,4 +65,9 @@ public class PublicKey : IHasId<int>
     //     RemoteOwnerId = remoteOwnerId;
     // }
     protected PublicKey(IClock clock) { _clock = clock; }
+    public void Attested(byte[] attested)
+    {
+        if (Attestation != null) throw ExceptionAttested.AttestedAlreadyExist;
+        Attestation = [.. attested];
+    }
 }

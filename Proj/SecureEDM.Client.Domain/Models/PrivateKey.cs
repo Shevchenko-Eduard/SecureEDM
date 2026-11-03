@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using SecureEDM.Common.Domain.Exceptions;
 using SecureEDM.Common.Domain.Interfaces;
 using SecureEDM.Common.Domain.Models.Interfaces;
 

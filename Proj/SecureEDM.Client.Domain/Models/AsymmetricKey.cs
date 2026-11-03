@@ -1,4 +1,5 @@
 using SecureEDM.Common.Domain.Enums;
+using SecureEDM.Common.Domain.Exceptions;
 using SecureEDM.Common.Domain.Interfaces;
 using SecureEDM.Common.Domain.Models.Interfaces;
 
@@ -48,11 +49,13 @@ public class AsymmetricKey : IHasId<int>, IHasRevocable<EnumRevokedReason>, IHas
 
     protected AsymmetricKey(IClock clock) { _clock = clock; }
 
-    public void Revoke(EnumRevokedReason reason)
+    public void Revoke(EnumRevokedReason reason) => Revoke(reason, _clock.Now);
+
+    public void Revoke(EnumRevokedReason reason, DateTimeOffset revokedAt)
     {
         ExceptionRevocation.CallAlreadyRevoked(this);
         ExceptionRevocation.CallInvalidReason(reason);
         RevokedReason = reason;
-        RevokedAt = _clock.Now;
+        RevokedAt = revokedAt;
     }
 }

@@ -1,5 +1,7 @@
 using System.Numerics;
 
+namespace SecureEDM.Common.Domain.Exceptions;
+
 public class ExceptionInvalidId(string? message = null, Exception? innerException = null) : Exception(message, innerException)
 {
     public static ExceptionInvalidId IdIsLessThanOrEqualToZero { get; } = new("ID is less than or equal to zero.");

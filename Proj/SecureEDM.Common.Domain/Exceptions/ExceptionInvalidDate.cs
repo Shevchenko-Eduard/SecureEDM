@@ -1,5 +1,7 @@
 using SecureEDM.Common.Domain.Interfaces;
 
+namespace SecureEDM.Common.Domain.Exceptions;
+
 public class ExceptionInvalidDate(string? message = null, Exception? innerException = null) : Exception(message, innerException)
 {
     public static ExceptionInvalidDate DateFromThePast { get; } = new("Date from the past.");

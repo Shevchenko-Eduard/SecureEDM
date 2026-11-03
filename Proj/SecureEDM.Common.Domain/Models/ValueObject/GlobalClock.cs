@@ -1,3 +1,4 @@
+using SecureEDM.Common.Domain.Exceptions;
 using SecureEDM.Common.Domain.Interfaces;
 
 namespace SecureEDM.Common.Domain.Models.ValueObject;

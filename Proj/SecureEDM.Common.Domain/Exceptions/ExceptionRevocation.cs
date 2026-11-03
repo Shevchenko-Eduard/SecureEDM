@@ -1,5 +1,7 @@
 using SecureEDM.Common.Domain.Models.Interfaces;
 
+namespace SecureEDM.Common.Domain.Exceptions;
+
 public class ExceptionRevocation(string? message = null, Exception? innerException = null) : Exception(message, innerException)
 {
     public static ExceptionRevocation AlreadyRevoked { get; } = new("Cannot be revoked again.");

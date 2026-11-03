@@ -1,5 +1,7 @@
 using System.Collections;
 
+namespace SecureEDM.Common.Domain.Exceptions;
+
 public class ExceptionNullableValue(string? message = null, Exception? innerException = null) : Exception(message, innerException)
 {
     public static ExceptionNullableValue ValueIsNull { get; } = new("Value is null.");
