@@ -37,9 +37,9 @@ public class UnitOfWorkClientTest
         mockClock.Setup(m => m.Now).Returns(new DateTimeOffset(new(2026, 4, 20)));
         try
         {
-            await uow.ExecuteInTransactionAsync(async () =>
+            await uow.ExecuteInTransactionAsync(async (token) =>
             {
-                await context.SaveChangesAsync();
+                await context.SaveChangesAsync(token);
             });
         }
         finally

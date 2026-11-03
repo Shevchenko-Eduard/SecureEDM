@@ -28,7 +28,7 @@ public class MapperTest
     {
         MapperService mapper = new();
         RecordEntity entity = new(10, "Bob", new(2000, 4, 20));
-        RecordDto dto = mapper.Map<RecordEntity, RecordDto>(entity);
+        RecordDto dto = mapper.To<RecordDto>().From(entity);
         Assert.Equal(entity.Name, dto.Name);
         Assert.Equal(entity.DOB, dto.DOB);
     }
@@ -37,7 +37,7 @@ public class MapperTest
     {
         MapperService mapper = new();
         RecordEntity entity = new(10, "Bob", new(2000, 4, 20));
-        ClassDto dto = mapper.Map<RecordEntity, ClassDto>(entity);
+        ClassDto dto = mapper.To<ClassDto>().From(entity);
         Assert.Equal(entity.Name, dto.Name);
         Assert.Equal(entity.DOB, dto.DOB);
     }
@@ -50,7 +50,7 @@ public class MapperTest
             Name = "Bob",
             DOB = new(2000, 4, 20)
         };
-        ClassEntity entity = mapper.Map<ClassDto, ClassEntity>(dto);
+        ClassEntity entity = mapper.To<ClassEntity>().From(dto);
         Assert.Equal(entity.Name, dto.Name);
         Assert.Equal(entity.DOB, dto.DOB);
     }

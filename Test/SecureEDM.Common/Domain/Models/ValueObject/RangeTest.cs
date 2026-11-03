@@ -1,3 +1,5 @@
+using SecureEDM.Common.Domain.Exceptions;
+
 namespace SecureEDM.Common.Domain.Models.ValueObject;
 
 public class RangeTest
