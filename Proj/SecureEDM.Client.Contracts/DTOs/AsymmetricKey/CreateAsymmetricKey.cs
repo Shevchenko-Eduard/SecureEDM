@@ -7,5 +7,5 @@ public class CreateAsymmetricKey(IClock clock)
 {
     protected readonly IClock _clock = clock;
     public DateTimeOffset CreatedAt { get; set; }
-    public EnumKeygenPairAlgorithm KeygenAlgorithm { get; set; }
+    public EnumKpgAlgorithm KeygenAlgorithm { get; set; }
 }

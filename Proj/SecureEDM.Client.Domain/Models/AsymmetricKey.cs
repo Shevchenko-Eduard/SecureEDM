@@ -35,7 +35,7 @@ public class AsymmetricKey : IHasId<int>, IHasRevocable<EnumRevokedReason>, IHas
         }
     }
     public EnumRevokedReason RevokedReason { get; private set; }
-    public EnumKeygenPairAlgorithm KeygenAlgorithm { get; init; }
+    public EnumKpgAlgorithm KeygenAlgorithm { get; init; }
 
     // public AsymmetricKey(
     //     IClock clock,
