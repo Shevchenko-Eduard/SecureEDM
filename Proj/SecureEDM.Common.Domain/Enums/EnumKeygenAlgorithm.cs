@@ -1,6 +1,6 @@
 namespace SecureEDM.Common.Domain.Enums;
 
-public enum EnumKeygenAlgorithm
+public enum EnumKeygenPairAlgorithm
 {
     AIMer,
     BIKE,

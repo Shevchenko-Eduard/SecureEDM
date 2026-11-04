@@ -10,5 +10,5 @@ public class QueryAsymmetricKey : IPagination
     public Range<DateTimeOffset>? CreatedAt { get; set; }
     public Range<DateTimeOffset>? RevokedAt { get; set; }
     public List<EnumRevokedReason>? RevokedReason { get; set; }
-    public List<EnumKeygenAlgorithm>? KeygenAlgorithm { get; set; }
+    public List<EnumKeygenPairAlgorithm>? KeygenAlgorithm { get; set; }
 }
