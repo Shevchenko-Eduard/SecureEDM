@@ -1,5 +1,4 @@
 using SecureEDM.Common.Domain.Enums;
-using SecureEDM.Common.Infrastructure.Cryptography;
 using SecureEDM.Common.Infrastructure.Cryptography.Enums;
 using static SecureEDM.Common.Infrastructure.Cryptography.AuxiliaryClass;
 

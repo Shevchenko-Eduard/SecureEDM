@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace SecureEDM.Client.Contracts.DTOs.PublicKey;
 
 public class AttestedPublicKey

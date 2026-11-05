@@ -1,6 +1,4 @@
-using System.Diagnostics.Eventing.Reader;
 using SecureEDM.Common.Infrastructure.Cryptography;
-using Xunit.Sdk;
 
 namespace SecureEDM.Common.Infrastructure.Serializers;
 

@@ -1,4 +1,3 @@
-using System.Text;
 using SecureEDM.Common.Contracts.Interfaces;
 
 namespace SecureEDM.Client.Infrastructure;
