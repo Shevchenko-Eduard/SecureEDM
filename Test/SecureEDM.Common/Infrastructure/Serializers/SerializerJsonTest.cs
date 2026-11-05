@@ -6,18 +6,30 @@ namespace SecureEDM.Common.Infrastructure.Serializers;
 
 public class SerializerJsonTest
 {
-    private record TestObject(int Id, string Name, int[] FriendsId, bool False = false, bool True = true, string? Null = null);
+    private record TestObject(
+        int Id,
+        string Name,
+        int[] FriendsId,
+        Uri Uri,
+        TimeSpan TimeSpan,
+        TestEnum TestEnum,
+        bool False = false,
+        bool True = true,
+        string? Null = null);
     private static readonly TestObject testObject = new(
         Id: 69,
         Name: "Bob",
-        FriendsId: [.. Enumerable.Range(2, 5)]
+        FriendsId: [.. Enumerable.Range(2, 5)],
+        new("http://test.org/"),
+        new(1, 2, 3),
+        TestEnum.TestEnum1
     );
     [Fact]
     public void SerializeAndDeserialize()
     {
         var s = new SerializerJson<TestObject>();
         var stringObject = s.Serialize(testObject);
-        // Console.WriteLine(stringObject);
+        Console.WriteLine(stringObject);
         var resObject = s.Deserialize(stringObject);
         AssertEqual(testObject, resObject);
     }
@@ -47,5 +59,10 @@ public class SerializerJsonTest
         Assert.Equal(expected.False, actual.False);
         Assert.Equal(expected.True, actual.True);
         Assert.Equal(expected.Null, actual.Null);
+    }
+    private enum TestEnum
+    {
+        TestEnum1,
+        TestEnum2
     }
 }

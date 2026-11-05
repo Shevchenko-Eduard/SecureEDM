@@ -2,15 +2,20 @@ using SecureEDM.Client.Contracts.Interfaces.Repositories.SettingRepo;
 
 namespace SecureEDM.Client.Infrastructure.Repositories.Settings;
 
-public class BridgeApiUrlRepo : IBridgeApiUrlRepo
+public class BridgeApiUrlRepo(ISettingProvider provider) : IBridgeApiUrlRepo
 {
-    public ValueTask<Uri> Get(CancellationToken token = default)
+    private readonly ISettingProvider _provider = provider;
+
+    public async ValueTask<Uri> Get(CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var model = await _provider.Get(token);
+        return model.BridgeApiUrl;
     }
 
-    public ValueTask Update(Uri value, CancellationToken token = default)
+    public async ValueTask Update(Uri value, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var model = await _provider.Get(token);
+        model.BridgeApiUrl = value;
+        await _provider.Update(model, token);
     }
 }

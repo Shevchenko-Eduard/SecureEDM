@@ -2,15 +2,19 @@ using SecureEDM.Client.Contracts.Interfaces.Repositories.SettingRepo;
 
 namespace SecureEDM.Client.Infrastructure.Repositories.Settings;
 
-public class AuthApiUrlRepo : IAuthApiUrlRepo
+public class AuthApiUrlRepo(ISettingProvider provider) : IAuthApiUrlRepo
 {
-    public ValueTask<Uri> Get(CancellationToken token = default)
+    private readonly ISettingProvider _provider = provider;
+    public async ValueTask<Uri> Get(CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var model = await _provider.Get(token);
+        return model.AuthApiUrl;
     }
 
-    public ValueTask Update(Uri value, CancellationToken token = default)
+    public async ValueTask Update(Uri value, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var model = await _provider.Get(token);
+        model.AuthApiUrl = value;
+        await _provider.Update(model, token);
     }
 }

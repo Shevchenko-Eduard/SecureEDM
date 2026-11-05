@@ -2,15 +2,20 @@ using SecureEDM.Client.Contracts.Interfaces.Repositories.SettingRepo;
 
 namespace SecureEDM.Client.Infrastructure.Repositories.Settings;
 
-public class SyncIntervalRepo : ISyncIntervalRepo
+public class SyncIntervalRepo(ISettingProvider provider) : ISyncIntervalRepo
 {
-    public ValueTask<TimeSpan> Get(CancellationToken token = default)
+    private readonly ISettingProvider _provider = provider;
+
+    public async ValueTask<TimeSpan> Get(CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var model = await _provider.Get(token);
+        return model.SyncInterval;
     }
 
-    public ValueTask Update(TimeSpan value, CancellationToken token = default)
+    public async ValueTask Update(TimeSpan value, CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        var model = await _provider.Get(token);
+        model.SyncInterval = value;
+        await _provider.Update(model, token);
     }
 }

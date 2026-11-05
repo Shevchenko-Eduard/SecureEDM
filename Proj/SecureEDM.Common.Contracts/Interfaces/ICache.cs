@@ -5,7 +5,7 @@ public interface ICache<TKey, TValue> : IDisposable
     where TValue : notnull
 {
     ValueTask Init<TObject>(
-        string backetName,
+        string? backetName = null,
         TimeSpan timerInterval = default
     );
     ValueTask InitGlobal(

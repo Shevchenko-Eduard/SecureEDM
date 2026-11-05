@@ -83,7 +83,7 @@ public class CachInMemory<TKey, TValue>(IPoolCache poolCache) : ICache<TKey, TVa
         return result;
     }
 
-    public async ValueTask Init<TObject>(string backetName, TimeSpan timerInterval = default)
+    public async ValueTask Init<TObject>(string? backetName = null, TimeSpan timerInterval = default)
     {
         Cache = _poolCache.Init(typeof(TObject), backetName);
         TimerInterval = timerInterval;
