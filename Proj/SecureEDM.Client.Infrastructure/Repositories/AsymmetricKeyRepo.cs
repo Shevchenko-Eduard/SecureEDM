@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Contracts.DTOs.AsymmetricKey;
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;

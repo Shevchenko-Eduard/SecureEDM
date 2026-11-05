@@ -1,4 +1,4 @@
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 using SecureEDM.Common.Contracts.Interfaces;
 
 namespace SecureEDM.Client.Contracts.Interfaces;

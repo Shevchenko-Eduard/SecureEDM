@@ -1,5 +1,4 @@
 using SecureEDM.Client.Contracts.DTOs.PublicKey;
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
 using SecureEDM.Common.Contracts.Interfaces;
 using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Domain.Models;
@@ -7,6 +6,7 @@ using SecureEDM.Client.Infrastructure.Database.ModelOrm;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using SecureEDM.Client.Infrastructure.Repositories.Tools;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 
 namespace SecureEDM.Client.Infrastructure.Repositories;
 

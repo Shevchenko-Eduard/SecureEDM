@@ -1,7 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 using SecureEDM.Common.Domain.Interfaces;
 
 namespace SecureEDM.Client.Infrastructure.Database;

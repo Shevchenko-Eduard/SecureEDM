@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Contracts.DTOs.HashOfDocument;
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;

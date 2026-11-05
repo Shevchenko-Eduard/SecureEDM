@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Contracts.Interfaces;
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 using SecureEDM.Client.Infrastructure.Database;
 
 namespace SecureEDM.Client.Infrastructure;

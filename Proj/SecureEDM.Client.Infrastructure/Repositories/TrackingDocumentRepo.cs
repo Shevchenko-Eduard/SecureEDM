@@ -1,5 +1,4 @@
 using SecureEDM.Client.Contracts.DTOs.TrackingDocument;
-using SecureEDM.Client.Contracts.Interfaces.Repositories;
 using SecureEDM.Common.Contracts.Interfaces;
 using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Domain.Models;
@@ -8,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Domain.Enums;
 using System.Collections.ObjectModel;
 using SecureEDM.Client.Infrastructure.Repositories.Tools;
+using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 
 namespace SecureEDM.Client.Infrastructure.Repositories;
 
