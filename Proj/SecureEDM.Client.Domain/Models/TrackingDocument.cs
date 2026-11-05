@@ -81,6 +81,6 @@ public class TrackingDocument : IHasId<int>, IHasCreated, IHasSoftDelete
     public void SoftDelete(DateTimeOffset deleteAt)
     {
         ExceptionDeletion.CallSoftDeletedAlreadyDo(this);
-        DeleteAt = DeleteAt;
+        DeleteAt = deleteAt;
     }
 }

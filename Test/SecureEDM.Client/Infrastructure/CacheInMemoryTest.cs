@@ -43,8 +43,23 @@ public class CacheInMemoryTest
         var res = await c1.Exists(key);
         Assert.False(res);
     }
+
     [Fact]
-    public async Task TestTimer2WithDelete()
+    public async Task TestCacheDelete()
+    {
+        var p = new PoolCachInMemory();
+        var c1 = new CachInMemory<Obj1, Obj2>(p);
+        Obj1 key = new(1);
+        Obj2 value = new(2);
+        await c1.InitGlobal("test");
+        await c1.Set(key, value);
+        await c1.Delete(key);
+        var res = await c1.Exists(key);
+        Assert.False(res);
+    }
+
+    [Fact]
+    public async Task TestTimerWithoutDelete()
     {
         var p = new PoolCachInMemory();
         var c1 = new CachInMemory<Obj1, Obj2>(p);

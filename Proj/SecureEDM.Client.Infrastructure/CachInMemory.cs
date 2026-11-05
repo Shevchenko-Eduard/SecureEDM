@@ -46,7 +46,7 @@ public class CachInMemory<TKey, TValue>(IPoolCache poolCache) : ICache<TKey, TVa
             StopTimer(key);
             Cache.Remove(key);
         }
-        throw new ArgumentException("Key arnt exist.");
+        else throw new ArgumentException("Key arnt exist.");
     }
 
     public async ValueTask<bool> Exists(TKey key)
