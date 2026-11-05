@@ -6,10 +6,10 @@ using SecureEDM.Client.Infrastructure.Database.ModelOrm;
 using Microsoft.EntityFrameworkCore;
 using SecureEDM.Client.Domain.Enums;
 using System.Collections.ObjectModel;
-using SecureEDM.Client.Infrastructure.Repositories.Tools;
 using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
+using SecureEDM.Client.Infrastructure.Repositories.Models.Tools;
 
-namespace SecureEDM.Client.Infrastructure.Repositories;
+namespace SecureEDM.Client.Infrastructure.Repositories.Models;
 
 public class TrackingDocumentRepo(
     ClientContext context,

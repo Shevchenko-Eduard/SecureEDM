@@ -17,7 +17,7 @@ public class SerializerJsonTest
     {
         var s = new SerializerJson<TestObject>();
         var stringObject = s.Serialize(testObject);
-        Console.WriteLine(stringObject);
+        // Console.WriteLine(stringObject);
         var resObject = s.Deserialize(stringObject);
         AssertEqual(testObject, resObject);
     }

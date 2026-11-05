@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using SecureEDM.Common.Domain.Models.ValueObject;
 
-namespace SecureEDM.Client.Infrastructure.Repositories.Tools;
+namespace SecureEDM.Client.Infrastructure.Repositories.Models.Tools;
 
 public static class QueryTools
 {

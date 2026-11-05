@@ -10,7 +10,7 @@ public class SqliteConnectionString : IDbConnectionString
         SqliteConnectionStringBuilder builder = new()
         {
             Cache = SqliteCacheMode.Shared,
-            DataSource = SqlitePath.GetPath(),
+            DataSource = AppDataDir.Sqlite,
             Mode = SqliteOpenMode.ReadWriteCreate,
             DefaultTimeout = 30
         };

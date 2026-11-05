@@ -5,10 +5,10 @@ using SecureEDM.Client.Contracts.Interfaces.Repositories.ModelRepo;
 using SecureEDM.Client.Domain.Models;
 using SecureEDM.Client.Infrastructure.Database;
 using SecureEDM.Client.Infrastructure.Database.ModelOrm;
-using SecureEDM.Client.Infrastructure.Repositories.Tools;
+using SecureEDM.Client.Infrastructure.Repositories.Models.Tools;
 using SecureEDM.Common.Contracts.Interfaces;
 
-namespace SecureEDM.Client.Infrastructure.Repositories;
+namespace SecureEDM.Client.Infrastructure.Repositories.Models;
 
 public class HashOfDocumentRepo(
     ClientContext context,
