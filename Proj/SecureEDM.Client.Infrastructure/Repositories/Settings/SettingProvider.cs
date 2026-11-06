@@ -16,10 +16,21 @@ public class SettingProvider : ISettingProvider
 
     public async ValueTask<SettingModel> Get(CancellationToken token = default)
     {
-        using var fs = new FileStream(AppDataDir.Setting, FileMode.OpenOrCreate, FileAccess.Read);
         if (await _cache.Exists(true)) return await _cache.Get(true);
-        var value = await _serializer.DeserializeAsync(fs);
-        return await _cache.GetOrSet(true, value);
+
+        using var fs = new FileStream(AppDataDir.Setting, FileMode.OpenOrCreate, FileAccess.Read);
+        if (fs.Length == 0)
+            return await _cache.GetOrSet(true, SettingDefaults.Create());
+
+        try
+        {
+            var value = await _serializer.DeserializeAsync(fs, token);
+            return await _cache.GetOrSet(true, value);
+        }
+        catch
+        {
+            return await _cache.GetOrSet(true, SettingDefaults.Create());
+        }
     }
 
     public async ValueTask Update(SettingModel value, CancellationToken token = default)

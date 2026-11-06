@@ -1,6 +1,6 @@
 using SecureEDM.Common.Domain.Enums;
 
-namespace SecureEDM.Common.Infrastructure.Cryptography.Interfaces;
+namespace SecureEDM.Common.Contracts.Interfaces;
 
 public interface IDigestAlgorithm
 {

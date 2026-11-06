@@ -1,7 +1,7 @@
 using SecureEDM.Common.Domain.Enums;
-using SecureEDM.Common.Infrastructure.Cryptography.ValueObject;
+using SecureEDM.Common.Domain.Models.ValueObject;
 
-namespace SecureEDM.Common.Infrastructure.Cryptography.Interfaces;
+namespace SecureEDM.Common.Contracts.Interfaces;
 
 public interface IKpgAlgorithm
 {

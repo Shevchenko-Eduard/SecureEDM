@@ -12,6 +12,13 @@ public static class AppDataDir
     {
         Environment.SpecialFolder specialFolder = Environment.SpecialFolder.LocalApplicationData;
         string folder = Environment.GetFolderPath(specialFolder);
+        if (string.IsNullOrWhiteSpace(folder))
+        {
+            folder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                ".local",
+                "share");
+        }
         string path = Path.Combine(folder, Dictionary);
         CreatedPath(path);
         return path;

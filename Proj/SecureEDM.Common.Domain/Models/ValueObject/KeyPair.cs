@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace SecureEDM.Common.Infrastructure.Cryptography.ValueObject;
+namespace SecureEDM.Common.Domain.Models.ValueObject;
 
 public class KeyPair(
     byte[] publicKey, 

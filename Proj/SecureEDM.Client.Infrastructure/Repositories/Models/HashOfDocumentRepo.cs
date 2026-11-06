@@ -37,6 +37,7 @@ public class HashOfDocumentRepo(
         var query = _context.HashOfDocuments.AsQueryable();
 
         QueryTools.ExecuteWhereIfNotNull(ref query, dto.Id, value => q => value.Contains(q.Id));
+        QueryTools.ExecuteWhereIfNotNull(ref query, dto.DocumentId, value => q => value.Contains(q.DocumentId));
         QueryTools.ExecuteWhereIfNotNull(ref query, dto.RemoteAuthorId, value => q => q.RemoteAuthorId != null && value.Contains((int)q.RemoteAuthorId));
         QueryTools.ExecuteWhereIfNotNull(ref query, dto.RevokedReason, value => q => value.Contains(q.RevokedReason));
         QueryTools.ExecuteWhereIfNotNull(ref query, dto.HashedAlgorithm, value => q => value.Contains(q.HashedAlgorithm));

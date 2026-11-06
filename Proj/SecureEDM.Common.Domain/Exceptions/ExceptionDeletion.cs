@@ -8,6 +8,7 @@ public class ExceptionDeletion(string? message = null, Exception? innerException
     public static ExceptionDeletion SoftDeletedAlreadyDo { get; } = new("The soft delete has already been done.");
     public static void CallDeleteBeforeCreation<TEntity>(TEntity entity) where TEntity : IHasCreated, IHasSoftDelete
     {
+        if (entity.DeleteAt is null) return;
         if (entity.DeleteAt > entity.CreatedAt) return;
         throw DeleteBeforeCreation;
     }

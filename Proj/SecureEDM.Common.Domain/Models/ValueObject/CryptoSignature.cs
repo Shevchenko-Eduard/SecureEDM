@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
 using SecureEDM.Common.Domain.Enums;
 
-namespace SecureEDM.Common.Infrastructure.Cryptography.ValueObject;
+namespace SecureEDM.Common.Domain.Models.ValueObject;
 
-public class Signature(
+public class CryptoSignature(
     EnumSignedAlgorithm algorithm,
     byte[] signature,
     byte[] publicKey

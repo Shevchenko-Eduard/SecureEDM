@@ -1,9 +1,9 @@
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.X509;
+using SecureEDM.Common.Contracts.Interfaces;
 using SecureEDM.Common.Domain.Enums;
-using SecureEDM.Common.Infrastructure.Cryptography.Interfaces;
+using SecureEDM.Common.Domain.Models.ValueObject;
 using SecureEDM.Common.Infrastructure.Cryptography.Utilities;
-using SecureEDM.Common.Infrastructure.Cryptography.ValueObject;
 
 namespace SecureEDM.Common.Infrastructure.Cryptography;
 

@@ -1,9 +1,9 @@
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
+using SecureEDM.Common.Contracts.Interfaces;
 using SecureEDM.Common.Domain.Enums;
-using SecureEDM.Common.Infrastructure.Cryptography.Interfaces;
+using SecureEDM.Common.Domain.Models.ValueObject;
 using SecureEDM.Common.Infrastructure.Cryptography.Utilities;
-using SecureEDM.Common.Infrastructure.Cryptography.ValueObject;
 
 namespace SecureEDM.Common.Infrastructure.Cryptography;
 
@@ -30,7 +30,7 @@ public class Signed : ISignedAlgorithm
     }
 
     public async ValueTask<bool> Verify(
-        Signature signature, Stream signable,
+        CryptoSignature signature, Stream signable,
         bool leaveInnerOpen = false,
         CancellationToken token = default)
     {

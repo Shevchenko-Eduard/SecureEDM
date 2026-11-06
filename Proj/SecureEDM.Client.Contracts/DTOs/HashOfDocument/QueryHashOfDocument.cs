@@ -7,6 +7,7 @@ namespace SecureEDM.Client.Contracts.DTOs.HashOfDocument;
 public class QueryHashOfDocument : IPagination
 {
     public List<int>? Id { get; set; }
+    public List<int>? DocumentId { get; set; }
     public List<int>? RemoteAuthorId { get; set; }
     public Range<DateTimeOffset>? CreatedAt { get; set; }
     public Range<DateTimeOffset>? RevokedAt { get; set; }
