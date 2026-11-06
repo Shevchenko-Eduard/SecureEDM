@@ -1,0 +1,119 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             xmlns:controls="using:SecureEDM.Client.Presentation.Controls"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.SigningView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <Border Classes="panel" MaxWidth="680" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <TextBlock Classes="h2" Text="Подписать документ" />
+
+                <TextBlock Classes="field-label" Text="Документ" />
+                <ComboBox ItemsSource="{Binding SignDocuments}"
+                          SelectedItem="{Binding SelectedSignDocument}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Display}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Classes="field-label" Text="Ключ подписи" Margin="0,16,0,6" />
+                <ComboBox ItemsSource="{Binding SignKeys}"
+                          SelectedItem="{Binding SelectedSignKey}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Display}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Classes="field-label" Text="Алгоритм подписи" Margin="0,16,0,6" />
+                <ComboBox ItemsSource="{Binding SignSignatureAlgorithms}"
+                          SelectedItem="{Binding SelectedSignAlgorithm}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Classes="note" Text="Список содержит алгоритмы, совместимые с выбранным ключом."
+                           IsVisible="{Binding HasSignSignatureAlgorithms}" Margin="0,4,0,0" />
+
+                <TextBlock Classes="field-label" Text="Хеш документа (SHA-256)" Margin="0,16,0,6" />
+                <Border Classes="box" MaxHeight="180">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBlock Classes="mono" Text="{Binding SignHash}" />
+                    </ScrollViewer>
+                </Border>
+                <controls:HashCellsControl Hash="{Binding SignHash}" Margin="0,8,0,0" />
+
+                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,22,0,0">
+                    <Button Classes="primary" Content="Подписать"
+                            Command="{Binding SignDocumentCommand}"
+                            IsEnabled="{Binding CanSignNow}" />
+                </StackPanel>
+
+                <Border IsVisible="{Binding HasSignResult}"
+                        Classes="cert ok"
+                        CornerRadius="14" Padding="20" Margin="0,20,0,0">
+                    <Grid ColumnDefinitions="140,20,*">
+                        <controls:SealControl Grid.Column="0" Width="140" Height="140"
+                                              IsValid="{Binding IsSignResultOk}"
+                                              RingText="ЭЛЕКТРОННАЯ ПОДПИСЬ ★ ДОКУМЕНТ ПОДПИСАН ★ "
+                                              CenterText="ПОДПИСАНО"
+                                              CenterFontSize="13"
+                                              ValidBrush="{DynamicResource OkBrush}"
+                                              InvalidBrush="{DynamicResource BadBrush}"
+                                              RenderTransform="rotate(-4deg)" />
+                        <Grid Grid.Column="2" ColumnDefinitions="110,*"
+                              RowDefinitions="Auto,Auto,Auto,Auto" VerticalAlignment="Center">
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Результат"
+                                       Foreground="{DynamicResource MuteBrush}" FontSize="14"
+                                       Margin="0,0,0,10" />
+                            <Border Grid.Row="0" Grid.Column="1" Classes="status ok"
+                                    HorizontalAlignment="Left" Margin="0,0,0,10">
+                                <TextBlock Text="Документ подписан" />
+                            </Border>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Подписант"
+                                       Foreground="{DynamicResource MuteBrush}" FontSize="14"
+                                       Margin="0,0,0,10" />
+                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                                        Spacing="4" Margin="0,0,0,10">
+                                <TextBlock Text="{Binding SignResultOwner}" FontSize="15" />
+                                <TextBlock Text="," FontSize="15" />
+                                <TextBlock Text="{Binding SignResultAlgorithm}" FontSize="15" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Время"
+                                       Foreground="{DynamicResource MuteBrush}" FontSize="14"
+                                       Margin="0,0,0,10" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SignResultTime}"
+                                       FontSize="15" Margin="0,0,0,10" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Подпись"
+                                       Foreground="{DynamicResource MuteBrush}" FontSize="14" />
+                            <TextBlock Grid.Row="3" Grid.Column="1" Classes="mono"
+                                       TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                                       Text="{Binding SignResultSignaturePreview}"
+                                       ToolTip.Tip="{Binding SignResultSignaturePreview}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <StackPanel Orientation="Horizontal" Margin="0,22,0,0"
+                            IsVisible="{Binding HasSignResult}">
+                    <Button Classes="secondary" Content="Скачать пакет подписи (.json)"
+                            Click="OnDownloadPackageClick" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

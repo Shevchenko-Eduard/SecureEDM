@@ -1,0 +1,158 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.LogView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <StackPanel Spacing="20">
+            <Border Classes="panel">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,18">
+                        <TextBlock Grid.Column="0" Classes="h2" Margin="0" Text="Журнал подписей" />
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="Причина отзыва" FontSize="13"
+                                       Foreground="{DynamicResource MuteBrush}" VerticalAlignment="Center" />
+                            <ComboBox Width="180" ItemsSource="{Binding RevocationReasons}"
+                                      SelectedItem="{Binding SelectedSignatureRevocationReason}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Classes="secondary small" Content="Экспорт реестра"
+                                    IsEnabled="{Binding CanExport}" Click="OnExportRegistryClick" />
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel IsVisible="{Binding HasSignatures}">
+                        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1">
+                            <Grid ColumnDefinitions="150,1.1*,1*,1*,100,130,190">
+                                <TextBlock Grid.Column="0" Classes="th-text" Margin="12,8" Text="Время" />
+                                <TextBlock Grid.Column="1" Classes="th-text" Margin="12,8" Text="Документ" />
+                                <TextBlock Grid.Column="2" Classes="th-text" Margin="12,8" Text="Подписант" />
+                                <TextBlock Grid.Column="3" Classes="th-text" Margin="12,8" Text="Алгоритм" />
+                                <TextBlock Grid.Column="4" Classes="th-text" Margin="12,8" Text="Хеш" />
+                                <TextBlock Grid.Column="5" Classes="th-text" Margin="12,8" Text="Статус" />
+                                <TextBlock Grid.Column="6" Classes="th-text" Margin="12,8" Text="Действия" />
+                            </Grid>
+                        </Border>
+
+                        <ItemsControl ItemsSource="{Binding Signatures}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="row">
+                                        <Grid ColumnDefinitions="150,1.1*,1*,1*,100,130,190">
+                                            <TextBlock Grid.Column="0" Margin="12,13" FontSize="13"
+                                                       Text="{Binding Time}" />
+                                            <TextBlock Grid.Column="1" Margin="12,13" FontSize="15"
+                                                       Text="{Binding DocumentTitle}"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Grid.Column="2" Margin="12,13" FontSize="15"
+                                                       Text="{Binding Signer}"
+                                                       TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Grid.Column="3" Margin="12,13" FontSize="14"
+                                                       Text="{Binding AlgorithmLabel}" />
+                                            <TextBlock Grid.Column="4" Classes="mono" Margin="12,13"
+                                                       TextWrapping="NoWrap"
+                                                       Text="{Binding HashShort}"
+                                                       ToolTip.Tip="{Binding HashFull}" />
+                                            <Border Grid.Column="5" Classes="status" Margin="12,10"
+                                                    Classes.ok="{Binding IsOk}"
+                                                    Classes.bad="{Binding IsBad}"
+                                                    ToolTip.Tip="{Binding StatusFull}">
+                                                <TextBlock Text="{Binding StatusText}" />
+                                            </Border>
+                                            <StackPanel Grid.Column="6" Orientation="Horizontal" Spacing="10"
+                                                        Margin="12,13"
+                                                        IsEnabled="{Binding DataContext.CanSign, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                                <Button Classes="link" Content="Отозвать"
+                                                        IsEnabled="{Binding !IsRevoked}"
+                                                        CommandParameter="{Binding Id}"
+                                                        Command="{Binding DataContext.RevokeSignatureCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                                <Button Classes="link" Content="Удалить"
+                                                        CommandParameter="{Binding Id}"
+                                                        Command="{Binding DataContext.DeleteSignatureCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <TextBlock Classes="empty" IsVisible="{Binding !HasSignatures}"
+                               Text="Подписей пока нет." />
+                </StackPanel>
+            </Border>
+
+            <Border Classes="panel">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,18">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                            <TextBlock Classes="h2" Margin="0" Text="Журнал событий" />
+                            <Border Classes="status accent" VerticalAlignment="Center">
+                                <TextBlock Text="защищён MAC" />
+                            </Border>
+                        </StackPanel>
+                        <Button Grid.Column="1" Classes="danger small" Content="Очистить данные"
+                                Command="{Binding ClearAllCommand}"
+                                IsEnabled="{Binding CanClear}" />
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,0,0,8">
+                        <Border Classes="status"
+                                Classes.ok="{Binding IsLogMacOk}"
+                                Classes.bad="{Binding IsLogMacBad}">
+                            <TextBlock Text="{Binding LogMacLabel}" />
+                        </Border>
+                        <TextBlock Text="{Binding LogEventCount, StringFormat='Событий: {0}'}"
+                                   Foreground="{DynamicResource MuteBrush}" FontSize="14"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel IsVisible="{Binding HasLogEntries}">
+                        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1">
+                            <Grid ColumnDefinitions="150,140,120,*">
+                                <TextBlock Grid.Column="0" Classes="th-text" Margin="12,8" Text="Время" />
+                                <TextBlock Grid.Column="1" Classes="th-text" Margin="12,8" Text="Пользователь" />
+                                <TextBlock Grid.Column="2" Classes="th-text" Margin="12,8" Text="Событие" />
+                                <TextBlock Grid.Column="3" Classes="th-text" Margin="12,8" Text="Описание" />
+                            </Grid>
+                        </Border>
+
+                        <ItemsControl ItemsSource="{Binding LogEntries}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="row">
+                                        <Grid ColumnDefinitions="150,140,120,*">
+                                            <TextBlock Grid.Column="0" Margin="12,13" FontSize="13"
+                                                       Text="{Binding Time}" />
+                                            <TextBlock Grid.Column="1" Margin="12,13" FontSize="15"
+                                                       Text="{Binding User}" />
+                                            <TextBlock Grid.Column="2" Margin="12,13" FontSize="15"
+                                                       Text="{Binding Type}" />
+                                            <TextBlock Grid.Column="3" Margin="12,13" FontSize="15"
+                                                       Text="{Binding Message}" TextWrapping="Wrap" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <TextBlock Classes="empty" IsVisible="{Binding !HasLogEntries}"
+                               Text="Событий пока нет." />
+
+                    <TextBlock Classes="note" Margin="0,16,0,0"
+                               Text="Журнал целостен, если верхний индикатор показывает «MAC ок». Подмена событий вне сессии будет обнаружена." />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

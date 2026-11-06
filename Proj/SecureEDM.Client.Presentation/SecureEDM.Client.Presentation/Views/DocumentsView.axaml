@@ -1,0 +1,201 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             xmlns:controls="using:SecureEDM.Client.Presentation.Controls"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.DocumentsView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <Grid ColumnDefinitions="4*,22,8*">
+            <Border Grid.Column="0" Classes="panel">
+                <StackPanel>
+                    <TextBlock Classes="h2" Text="{Binding DocumentFormTitle}" />
+
+                    <TextBlock Classes="field-label" Text="Шаблон" />
+                    <ComboBox ItemsSource="{Binding Templates}"
+                              SelectedItem="{Binding SelectedTemplate}"
+                              IsEnabled="{Binding CanEditDocuments}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Classes="field-label" Text="Название" Margin="0,16,0,6" />
+                    <TextBox Text="{Binding DocumentTitle}"
+                             IsReadOnly="{Binding !CanEditDocuments}"
+                             Classes.invalid="{Binding HasDocumentTitleError}" />
+                    <TextBlock Classes="error" Text="{Binding DocumentTitleError}"
+                               IsVisible="{Binding HasDocumentTitleError}" />
+
+                    <TextBlock Classes="field-label" Text="Автор" Margin="0,16,0,6" />
+                    <TextBox Text="{Binding DocumentAuthor}"
+                             IsReadOnly="{Binding !CanEditDocuments}" />
+
+                    <TextBlock Classes="field-label" Text="Текст документа" Margin="0,16,0,6" />
+                    <TextBox Classes="document-body"
+                             Text="{Binding DocumentBody}"
+                             IsReadOnly="{Binding !CanEditDocuments}"
+                             Classes.invalid="{Binding HasDocumentBodyError}" />
+                    <TextBlock Classes="error" Text="{Binding DocumentBodyError}"
+                               IsVisible="{Binding HasDocumentBodyError}" />
+
+                    <TextBlock Classes="field-label" Text="SHA-256 текущего текста" Margin="0,16,0,6" />
+                    <Border Classes="box" MaxHeight="180">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock Classes="mono" Text="{Binding DocumentBodyHash}" />
+                        </ScrollViewer>
+                    </Border>
+                    <controls:HashCellsControl Hash="{Binding DocumentBodyHash}" Margin="0,8,0,0" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,22,0,0">
+                        <Button Classes="primary" Content="Сохранить документ"
+                                Command="{Binding SaveDocumentCommand}"
+                                IsEnabled="{Binding CanEditDocuments}" />
+                        <Button Classes="secondary" Content="Новый"
+                                Command="{Binding NewDocumentCommand}"
+                                IsEnabled="{Binding CanEditDocuments}" />
+                        <Button Classes="danger" Content="Удалить"
+                                Command="{Binding DeleteDocumentCommand}"
+                                IsEnabled="{Binding CanEditDocuments}" />
+                    </StackPanel>
+
+                    <TextBlock Classes="note" Margin="0,16,0,0"
+                               Text="После изменения подписанного документа прежние подписи перестанут проходить проверку." />
+
+                    <StackPanel IsVisible="{Binding HasDocumentHistory}" Margin="0,16,0,0">
+                        <TextBlock Classes="field-label" Text="История версий" />
+                        <ItemsControl ItemsSource="{Binding DocumentHistory}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{DynamicResource LineBrush}"
+                                            BorderThickness="0,0,0,1" Padding="0,6">
+                                        <Grid ColumnDefinitions="32,*">
+                                            <TextBlock Grid.Column="0" Text="{Binding Version, StringFormat='v{0}'}"
+                                                       FontSize="12" Foreground="{DynamicResource MuteBrush}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Title}" FontSize="13"
+                                                           TextTrimming="CharacterEllipsis" />
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <TextBlock Classes="mono" FontSize="10"
+                                                               TextWrapping="NoWrap"
+                                                               Text="{Binding HashShort}" />
+                                                    <TextBlock Text="{Binding ArchivedAt}" FontSize="11"
+                                                               Foreground="{DynamicResource MuteBrush}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Classes="panel">
+                <StackPanel>
+                    <TextBlock Classes="h2" Text="Реестр документов" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,0,0,14">
+                        <TextBox x:Name="DocumentSearchBox" Width="280"
+                                 PlaceholderText="Поиск по названию, №, автору"
+                                 Text="{Binding DocumentSearch}" />
+                        <ComboBox Width="90" ItemsSource="{Binding PageSizes}"
+                                  SelectedItem="{Binding SelectedPageSize}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Label}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel IsVisible="{Binding HasDocumentRows}">
+                        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1">
+                            <Grid ColumnDefinitions="54,1.8*,0.9*,84,80,94">
+                                <Button Grid.Column="0" Classes="th" Padding="8,8"
+                                        Content="{Binding NumberHeader}"
+                                        Command="{Binding SortDocumentsCommand}" CommandParameter="num" />
+                                <Button Grid.Column="1" Classes="th" Padding="8,8"
+                                        Content="{Binding TitleHeader}"
+                                        Command="{Binding SortDocumentsCommand}" CommandParameter="title" />
+                                <Button Grid.Column="2" Classes="th" Padding="8,8"
+                                        Content="{Binding AuthorHeader}"
+                                        Command="{Binding SortDocumentsCommand}" CommandParameter="author" />
+                                <Button Grid.Column="3" Classes="th" Padding="8,8"
+                                        Content="{Binding CreatedHeader}"
+                                        Command="{Binding SortDocumentsCommand}" CommandParameter="created" />
+                                <TextBlock Grid.Column="4" Classes="th-text" Margin="8,8"
+                                           Text="Хеш" VerticalAlignment="Center" />
+                                <Button Grid.Column="5" Classes="th" Padding="8,8"
+                                        Content="{Binding StatusHeader}"
+                                        Command="{Binding SortDocumentsCommand}" CommandParameter="status" />
+                            </Grid>
+                        </Border>
+
+                        <ItemsControl ItemsSource="{Binding Documents}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="row" Classes.selected="{Binding IsSelected}">
+                                        <Grid ColumnDefinitions="54,1.8*,0.9*,84,80,94">
+                                            <TextBlock Grid.Column="0" Margin="8,13" FontSize="12"
+                                                       Text="{Binding Number}" VerticalAlignment="Center" />
+                                            <Button Grid.Column="1" Classes="link" Margin="8,13"
+                                                    HorizontalAlignment="Left"
+                                                    CommandParameter="{Binding Id}"
+                                                    Command="{Binding DataContext.OpenDocumentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                                <TextBlock Text="{Binding Title}" FontSize="13.5"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           TextWrapping="NoWrap" />
+                                            </Button>
+                                            <TextBlock Grid.Column="2" Margin="8,13" FontSize="12.5"
+                                                       Text="{Binding Author}" TextTrimming="CharacterEllipsis"
+                                                       ToolTip.Tip="{Binding Author}" />
+                                            <TextBlock Grid.Column="3" Margin="8,13" FontSize="11.5"
+                                                       Text="{Binding Created}"
+                                                       ToolTip.Tip="{Binding CreatedFull}" />
+                                            <TextBlock Grid.Column="4" Classes="mono" Margin="8,13"
+                                                       FontSize="11.5" TextWrapping="NoWrap"
+                                                       Text="{Binding HashShort}"
+                                                       ToolTip.Tip="{Binding HashFull}" />
+                                            <Border Grid.Column="5" Classes="status" Margin="8,10"
+                                                    Classes.ok="{Binding IsOk}"
+                                                    Classes.warn="{Binding IsWarn}"
+                                                    Classes.none="{Binding IsNone}"
+                                                    Classes.bad="{Binding IsBad}"
+                                                    ToolTip.Tip="{Binding StatusFull}">
+                                                <TextBlock Text="{Binding StatusText}" FontSize="12" />
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <TextBlock Classes="empty" IsVisible="{Binding !HasDocumentRows}"
+                               Text="{Binding EmptyDocumentsText}" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="6"
+                                HorizontalAlignment="Right" Margin="0,12,0,0"
+                                IsVisible="{Binding HasDocumentPager}">
+                        <TextBlock Text="{Binding DocumentPageLabel}" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource MuteBrush}" FontSize="14" />
+                        <Button Classes="secondary small" Content="←"
+                                Command="{Binding PreviousPageCommand}"
+                                IsEnabled="{Binding CanPreviousDocumentPage}" />
+                        <Button Classes="secondary small" Content="→"
+                                Command="{Binding NextPageCommand}"
+                                IsEnabled="{Binding CanNextDocumentPage}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

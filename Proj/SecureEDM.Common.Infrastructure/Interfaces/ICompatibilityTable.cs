@@ -20,7 +20,7 @@ public abstract class CompatibilityTable<TLeft, TRight>
             if (!compatiblesLeft.TryGetValue(c.Left, out var leftList))
             {
                 leftList = [];
-                compatiblesLeft[c.Left] = [];
+                compatiblesLeft[c.Left] = leftList;
             }
             leftList.Add(c.Right);
 

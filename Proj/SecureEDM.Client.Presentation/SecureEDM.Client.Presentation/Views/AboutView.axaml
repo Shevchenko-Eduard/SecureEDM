@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.AboutView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <Border Classes="panel" MaxWidth="760" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <TextBlock Classes="h2" Text="Как устроена схема" />
+
+                <TextBlock TextWrapping="Wrap" FontSize="15"
+                           Text="Для документа вычисляется хеш SHA-256 по канонизированному представлению: поля сериализуются с сортировкой ключей. Хеш подписывается закрытым ключом автора. Любой, у кого есть открытый ключ, проверяет два факта: подпись создал владелец ключа (авторство) и текст не менялся с момента подписания (целостность)." />
+
+                <TextBlock Classes="h3" Text="Формат пакета edo-signature/2" />
+                <Border Classes="box" MaxHeight="260">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBlock Classes="mono" Text="{Binding AboutPackageSample}" />
+                    </ScrollViewer>
+                </Border>
+
+                <TextBlock Classes="note" Margin="0,16,0,0"
+                           Text="Документ подписывается канонизированным текстом с алгоритмами SHA-256withRSAandMGF1 (RSA-PSS) или SHA-256withECDSA. Для проверки используется тот же канонический вид, поэтому изменение любого поля документа делает старую подпись недействительной." />
+
+                <TextBlock Classes="note" Margin="0,8,0,0"
+                           Text="Закрытые ключи не покидают клиент и хранятся только в памяти сессии. Открытые ключи, подписи и журнал сохраняются в локальном JSON-реестре приложения; приватные ключи в него не попадают." />
+
+                <TextBlock Classes="note" Margin="0,8,0,0"
+                           Text="ГОСТ Р 34.11-2012 и ГОСТ Р 34.10-2012 доступны через криптографическое ядро Common на BouncyCastle; в этом прототипе по умолчанию используются RSA-PSS и ECDSA. Аттестация ключей AuthServer и доверенное время в прототип не включены." />
+
+                <TextBlock Classes="note" Margin="0,8,0,0"
+                           Text="Клиент также ведёт реестр хешей документа (основной и дополнительные алгоритмы), историю версий, отслеживаемые файлы со статусами и настройки AuthServer/BridgeServer, корневого каталога, стратегии конфликтов и интервала синхронизации." />
+
+                <TextBlock Classes="h3" Text="Роли" />
+                <TextBlock TextWrapping="Wrap" FontSize="15" Margin="0,0,0,6">
+                    <Run Text="Автор" FontWeight="SemiBold" />
+                    <Run Text=" — создаёт и редактирует документы, подписывает своими ключами." />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" FontSize="15" Margin="0,0,0,6">
+                    <Run Text="Проверяющий" FontWeight="SemiBold" />
+                    <Run Text=" — проверяет подписи, не может менять документы." />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" FontSize="15">
+                    <Run Text="Администратор" FontWeight="SemiBold" />
+                    <Run Text=" — управляет ключами, экспортирует реестр." />
+                </TextBlock>
+
+                <TextBlock Classes="note" Margin="0,20,0,0"
+                           Text="Прототип учебный: нет аутентификации через IdP, нет квалифицированных сертификатов и доверенного времени. Журнал защищён учебным MAC, а не настоящей ЭП." />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

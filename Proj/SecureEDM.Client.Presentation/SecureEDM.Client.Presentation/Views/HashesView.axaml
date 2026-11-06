@@ -1,0 +1,125 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.HashesView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <Grid ColumnDefinitions="4*,22,8*">
+            <Border Grid.Column="0" Classes="panel">
+                <StackPanel>
+                    <TextBlock Classes="h2" Text="Добавить хеш" />
+
+                    <TextBlock Classes="field-label" Text="Документ" />
+                    <ComboBox ItemsSource="{Binding HashDocuments}"
+                              SelectedItem="{Binding SelectedHashDocument}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Display}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Classes="field-label" Text="Алгоритм" Margin="0,16,0,6" />
+                    <ComboBox ItemsSource="{Binding HashAlgorithms}"
+                              SelectedItem="{Binding SelectedHashAlgorithm}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,22,0,0">
+                        <Button Classes="primary" Content="Рассчитать и добавить"
+                                Command="{Binding AddHashCommand}"
+                                IsEnabled="{Binding CanEditDocuments}" />
+                    </StackPanel>
+
+                    <TextBlock Classes="h3" Text="Причина отзыва" />
+                    <ComboBox ItemsSource="{Binding RevocationReasons}"
+                              SelectedItem="{Binding SelectedHashRevocationReason}"
+                              IsEnabled="{Binding CanEditDocuments}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Classes="note" Margin="0,16,0,0"
+                               Text="Основной хеш помечает предпочтительный алгоритм в реестре. Подписание использует SHA-256 канонизированного документа. Дополнительные хеши позволяют хранить альтернативные алгоритмы (SHA-512, ГОСТ, BLAKE2)." />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Classes="panel">
+                <StackPanel>
+                    <TextBlock Classes="h2" Text="Хеши документа" />
+
+                    <StackPanel IsVisible="{Binding HasHashes}">
+                        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1">
+                            <Grid ColumnDefinitions="100,2*,115,110,205">
+                                <TextBlock Grid.Column="0" Classes="th-text" Margin="12,8" Text="Алгоритм" />
+                                <TextBlock Grid.Column="1" Classes="th-text" Margin="12,8" Text="Хеш" />
+                                <TextBlock Grid.Column="2" Classes="th-text" Margin="12,8" Text="Создан" />
+                                <TextBlock Grid.Column="3" Classes="th-text" Margin="12,8" Text="Статус" />
+                                <TextBlock Grid.Column="4" Classes="th-text" Margin="12,8" Text="Действия" />
+                            </Grid>
+                        </Border>
+
+                        <ItemsControl ItemsSource="{Binding Hashes}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="row" Classes.selected="{Binding IsSelected}">
+                                        <Grid ColumnDefinitions="100,2*,115,110,205">
+                                            <TextBlock Grid.Column="0" Margin="12,13" FontSize="14"
+                                                       Text="{Binding AlgorithmLabel}" />
+                                            <TextBlock Grid.Column="1" Classes="mono" Margin="12,13"
+                                                       TextWrapping="NoWrap"
+                                                       Text="{Binding HashShort}"
+                                                       ToolTip.Tip="{Binding HashFull}" />
+                                            <TextBlock Grid.Column="2" Margin="12,13" FontSize="13"
+                                                       Text="{Binding Created}" />
+                                            <Border Grid.Column="3" Classes="status" Margin="8,10" Padding="2,7"
+                                                    Classes.ok="{Binding IsPrimary}"
+                                                    Classes.warn="{Binding IsAdditional}"
+                                                    Classes.bad="{Binding IsRevoked}"
+                                                    ToolTip.Tip="{Binding StatusFull}">
+                                                <TextBlock Text="{Binding StatusText}" FontSize="11.5" />
+                                            </Border>
+                                            <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="10"
+                                                        Margin="12,13"
+                                                        IsEnabled="{Binding DataContext.CanEditDocuments, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                                <Button Classes="link" Content="Осн."
+                                                        IsEnabled="{Binding CanSetPrimary}"
+                                                        CommandParameter="{Binding Id}"
+                                                        Command="{Binding DataContext.SetPrimaryHashCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                                <Button Classes="link" Content="Отозвать"
+                                                        IsEnabled="{Binding !IsRevoked}"
+                                                        CommandParameter="{Binding Id}"
+                                                        Command="{Binding DataContext.RevokeHashCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                                <Button Classes="link" Content="Удалить"
+                                                        CommandParameter="{Binding Id}"
+                                                        Command="{Binding DataContext.DeleteHashCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <TextBlock Classes="empty" IsVisible="{Binding !HasHashes}"
+                               Text="{Binding EmptyHashesText}" />
+
+                    <TextBlock Classes="note" Margin="0,16,0,0"
+                               Text="При изменении документа прежние хеши автоматически отзываются как устаревшие, а для новой версии создаётся основной SHA-256." />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,112 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.FilesView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <Border Classes="panel">
+            <StackPanel>
+                <TextBlock Classes="h2" Text="Отслеживаемые файлы" />
+
+                <Grid ColumnDefinitions="2*,100,Auto" ColumnSpacing="10">
+                    <TextBox Grid.Column="0" Text="{Binding NewTrackingPath}"
+                             PlaceholderText="Относительный путь, например docs/contract.pdf"
+                             Classes.invalid="{Binding HasTrackingPathError}" />
+                    <TextBox Grid.Column="1" Text="{Binding NewTrackingExtension}"
+                             PlaceholderText=".pdf" />
+                    <Button Grid.Column="2" Classes="primary" Content="Добавить"
+                            Command="{Binding AddTrackingFileCommand}"
+                            IsEnabled="{Binding CanManageFiles}" />
+                </Grid>
+                <TextBlock Classes="error" Text="{Binding TrackingPathError}"
+                           IsVisible="{Binding HasTrackingPathError}" />
+
+                <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,12,0,14">
+                    <CheckBox IsChecked="{Binding ShowDeletedTrackingFiles}"
+                              Content="Показывать удалённые" />
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding HasTrackingFiles}">
+                    <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1">
+                        <Grid ColumnDefinitions="2*,70,140,120,120,280">
+                            <TextBlock Grid.Column="0" Classes="th-text" Margin="12,8" Text="Путь" />
+                            <TextBlock Grid.Column="1" Classes="th-text" Margin="12,8" Text="Расш." />
+                            <TextBlock Grid.Column="2" Classes="th-text" Margin="12,8" Text="Статус" />
+                            <TextBlock Grid.Column="3" Classes="th-text" Margin="12,8" Text="Добавлен" />
+                            <TextBlock Grid.Column="4" Classes="th-text" Margin="12,8" Text="Синхронизация" />
+                            <TextBlock Grid.Column="5" Classes="th-text" Margin="12,8" Text="Действия" />
+                        </Grid>
+                    </Border>
+
+                    <ItemsControl ItemsSource="{Binding TrackingFiles}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Classes="row" Classes.selected="{Binding IsSelected}">
+                                    <Grid ColumnDefinitions="2*,70,140,120,120,280">
+                                        <TextBlock Grid.Column="0" Margin="12,13" FontSize="14"
+                                                   Text="{Binding Path}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   ToolTip.Tip="{Binding StatusFull}" />
+                                        <TextBlock Grid.Column="1" Margin="12,13" FontSize="13"
+                                                   Text="{Binding Extension}" />
+                                        <Border Grid.Column="2" Classes="status" Margin="12,10"
+                                                Classes.ok="{Binding IsActive}"
+                                                Classes.warn="{Binding IsWarn}"
+                                                Classes.bad="{Binding IsBad}"
+                                                Classes.none="{Binding IsNone}"
+                                                ToolTip.Tip="{Binding StatusFull}">
+                                            <TextBlock Text="{Binding StatusText}" />
+                                        </Border>
+                                        <TextBlock Grid.Column="3" Margin="12,13" FontSize="13"
+                                                   Text="{Binding Created}" />
+                                        <TextBlock Grid.Column="4" Margin="12,13" FontSize="13"
+                                                   Text="{Binding LastSync}" />
+                                        <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="10"
+                                                    Margin="12,13"
+                                                    IsVisible="{Binding CanAct}"
+                                                    IsEnabled="{Binding DataContext.CanManageFiles, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
+                                            <Button Classes="link" Content="Проверить"
+                                                    IsEnabled="{Binding CanAct}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Command="{Binding DataContext.CheckTrackingFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                            <Button Classes="link" Content="Синхр."
+                                                    IsEnabled="{Binding CanAct}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Command="{Binding DataContext.SyncTrackingFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                            <Button Classes="link" Content="Пауза"
+                                                    IsEnabled="{Binding CanAct}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Command="{Binding DataContext.PauseTrackingFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                            <Button Classes="link" Content="Удалить"
+                                                    IsEnabled="{Binding CanAct}"
+                                                    CommandParameter="{Binding Id}"
+                                                    Command="{Binding DataContext.SoftDeleteTrackingFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                        </StackPanel>
+                                        <Button Grid.Column="5" Classes="link" Content="Стереть"
+                                                Margin="12,13"
+                                                IsVisible="{Binding IsDeleted}"
+                                                CommandParameter="{Binding Id}"
+                                                Command="{Binding DataContext.HardDeleteTrackingFileCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <TextBlock Classes="empty" IsVisible="{Binding !HasTrackingFiles}"
+                           Text="{Binding EmptyTrackingFilesText}" />
+
+                <TextBlock Classes="note" Margin="0,16,0,0"
+                           Text="{Binding SettingsRootPath, StringFormat='Пути указываются относительно корневого каталога: {0}'}" />
+                <TextBlock Classes="note" Margin="0,8,0,0"
+                           Text="Проверка сверяет наличие файла по указанному пути. Синхронизация обновляет время последней синхронизации и статус; приостановка сохраняет запись, но исключает её из активной работы." />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

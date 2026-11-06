@@ -15,7 +15,7 @@ public static class ReadingStream
         {
             while (true)
             {
-                if (token.CanBeCanceled) break;
+                token.ThrowIfCancellationRequested();
                 var bytesRead = await stream.ReadAtLeastAsync(buffer, 1, false, token);
                 if (bytesRead == 0) break;
                 action(buffer, totalBytesRead, bytesRead);

@@ -1,0 +1,190 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1180" d:DesignHeight="800"
+             x:Class="SecureEDM.Client.Presentation.Views.KeysView"
+             x:DataType="vm:MainViewModel"
+             x:CompileBindings="False">
+
+    <Grid Margin="36,36,44,64" MaxWidth="1180" HorizontalAlignment="Stretch">
+        <Grid ColumnDefinitions="5*,22,7*">
+            <Border Grid.Column="0" Classes="panel">
+                <StackPanel>
+                    <TextBlock Classes="h2" Text="Создать ключевую пару" />
+
+                    <TextBlock Classes="field-label" Text="Владелец" />
+                    <TextBox Text="{Binding KeyOwner}"
+                             PlaceholderText="Например, Иванов И. И."
+                             Classes.invalid="{Binding HasKeyOwnerError}" />
+                    <TextBlock Classes="error" Text="{Binding KeyOwnerError}"
+                               IsVisible="{Binding HasKeyOwnerError}" />
+
+                    <TextBlock Classes="field-label" Text="Алгоритм" Margin="0,16,0,6" />
+                    <ComboBox ItemsSource="{Binding KeyAlgorithms}"
+                              SelectedItem="{Binding SelectedKeyAlgorithm}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Classes="note" Text="{Binding SelectedKeyAlgorithm.Description}"
+                               Margin="0,4,0,0" />
+
+                    <TextBlock Classes="field-label" Text="Размер ключа / параметр" Margin="0,16,0,6" />
+                    <ComboBox ItemsSource="{Binding KeyLengths}"
+                              SelectedItem="{Binding SelectedKeyLength}" />
+
+                    <TextBlock Classes="field-label" Text="Алгоритм подписи" Margin="0,16,0,6" />
+                    <ComboBox ItemsSource="{Binding KeySignatureAlgorithms}"
+                              SelectedItem="{Binding SelectedKeySignatureAlgorithm}"
+                              IsEnabled="{Binding HasKeySignatureAlgorithms}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Classes="note" IsVisible="{Binding !HasKeySignatureAlgorithms}"
+                               Text="Этот алгоритм не поддерживает подпись: ключ будет создан только для обмена ключами или шифрования." />
+
+                    <TextBlock Classes="field-label" Text="Срок действия, дней" Margin="0,16,0,6" />
+                    <TextBox Text="{Binding KeyDaysText}"
+                             Classes.invalid="{Binding HasKeyDaysError}" />
+                    <TextBlock Classes="error" Text="{Binding KeyDaysError}"
+                               IsVisible="{Binding HasKeyDaysError}" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,22,0,0">
+                        <Button Classes="primary" Content="{Binding GenerateKeyButtonText}"
+                                Command="{Binding GenerateKeyCommand}"
+                                IsEnabled="{Binding CanGenerateKey}" />
+                    </StackPanel>
+
+                    <TextBlock Classes="note" Margin="0,16,0,0"
+                               Text="Закрытый ключ создаётся как неэкспортируемый и живёт только в этой сессии приложения. Открытый ключ сохраняется в реестре вместе со сроком действия." />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Classes="panel">
+                <StackPanel>
+                    <TextBlock Classes="h2" Text="Реестр открытых ключей" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,0,0,14">
+                        <TextBox Width="280" PlaceholderText="Поиск по владельцу"
+                                 Text="{Binding KeySearch}" />
+                    </StackPanel>
+
+                    <StackPanel IsVisible="{Binding HasKeyRows}">
+                        <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1">
+                            <Grid ColumnDefinitions="1.3*,1.1*,76,90,130,36">
+                                <TextBlock Grid.Column="0" Classes="th-text" Margin="8,8" Text="Владелец" />
+                                <TextBlock Grid.Column="1" Classes="th-text" Margin="8,8" Text="Алгоритм" />
+                                <TextBlock Grid.Column="2" Classes="th-text" Margin="8,8" Text="Срок" />
+                                <TextBlock Grid.Column="3" Classes="th-text" Margin="8,8" Text="Отпечаток" />
+                                <TextBlock Grid.Column="4" Classes="th-text" Margin="8,8" Text="Статус" />
+                            </Grid>
+                        </Border>
+
+                        <ItemsControl ItemsSource="{Binding Keys}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Classes="row" Classes.selected="{Binding IsSelected}">
+                                        <Grid ColumnDefinitions="1.3*,1.1*,76,90,130,36">
+                                            <TextBlock Grid.Column="0" Margin="8,13" FontSize="13"
+                                                       Text="{Binding Owner}" TextTrimming="CharacterEllipsis"
+                                                       ToolTip.Tip="{Binding Owner}" />
+                                            <TextBlock Grid.Column="1" Margin="8,13" FontSize="12.5"
+                                                       Text="{Binding AlgorithmLabel}" TextWrapping="Wrap" />
+                                            <TextBlock Grid.Column="2" Margin="8,13" FontSize="11.5"
+                                                       Text="{Binding ValidUntil}"
+                                                       ToolTip.Tip="{Binding ValidUntilFull}" />
+                                            <TextBlock Grid.Column="3" Classes="mono" Margin="8,13"
+                                                       FontSize="11.5" TextWrapping="NoWrap"
+                                                       Text="{Binding FingerprintShort}"
+                                                       ToolTip.Tip="{Binding FingerprintFull}" />
+                                            <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="4"
+                                                        Margin="8,10">
+                                                <Border Classes="status" Padding="2,8"
+                                                        Classes.ok="{Binding IsActive}"
+                                                        Classes.warn="{Binding IsExpired}"
+                                                        Classes.bad="{Binding IsRevoked}">
+                                                    <TextBlock Text="{Binding StatusText}" FontSize="11.5" />
+                                                </Border>
+                                                <Border Classes="status" Padding="2,8"
+                                                        Classes.ok="{Binding InSession}"
+                                                        Classes.none="{Binding NotInSession}">
+                                                    <TextBlock Text="{Binding SessionText}" FontSize="11.5" />
+                                                </Border>
+                                            </StackPanel>
+                                            <Button Grid.Column="5" Classes="link" Margin="4,13" FontSize="12"
+                                                    Content="PEM"
+                                                    CommandParameter="{Binding Id}"
+                                                    Command="{Binding DataContext.SelectKeyCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <TextBlock Classes="empty" IsVisible="{Binding !HasKeyRows}"
+                               Text="{Binding EmptyKeysText}" />
+
+                    <StackPanel IsVisible="{Binding IsKeyPemVisible}" Margin="0,14,0,0">
+                        <TextBlock Classes="field-label" Text="Открытый ключ (PEM)" />
+                        <Border Classes="box" MaxHeight="180">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <TextBlock Classes="mono" Text="{Binding SelectedKeyPem}" />
+                            </ScrollViewer>
+                        </Border>
+
+                        <TextBlock Classes="field-label" Text="Аттестация" Margin="0,16,0,6" />
+                        <TextBlock Text="{Binding KeyAttestationStatus}" FontSize="13"
+                                   Foreground="{DynamicResource MuteBrush}" />
+                        <TextBox Text="{Binding KeyAttestationInput}"
+                                 PlaceholderText="Base64-строка аттестации"
+                                 IsEnabled="{Binding CanAttestSelectedKey}"
+                                 Classes.invalid="{Binding HasKeyAttestationError}" />
+                        <TextBlock Classes="error" Text="{Binding KeyAttestationError}"
+                                   IsVisible="{Binding HasKeyAttestationError}" />
+
+                        <TextBlock Classes="field-label" Text="Remote owner ID" Margin="0,12,0,6" />
+                        <TextBox Text="{Binding KeyRemoteOwnerIdText}"
+                                 PlaceholderText="Необязательный идентификатор"
+                                 IsEnabled="{Binding CanAttestSelectedKey}" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                            <Button Classes="secondary small" Content="Аттестовать"
+                                    Command="{Binding AttestSelectedKeyCommand}"
+                                    IsEnabled="{Binding CanAttestSelectedKey}" />
+                        </StackPanel>
+
+                        <TextBlock Classes="field-label" Text="Причина отзыва" Margin="0,16,0,6" />
+                        <ComboBox ItemsSource="{Binding RevocationReasons}"
+                                  SelectedItem="{Binding SelectedKeyRevocationReason}"
+                                  IsEnabled="{Binding CanRevokeSelectedKey}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                            <Button Classes="secondary small" Content="Копировать" Click="OnCopyPemClick" />
+                            <Button Classes="danger small" Content="Отозвать ключ"
+                                    Command="{Binding RevokeSelectedKeyCommand}"
+                                    IsEnabled="{Binding CanRevokeSelectedKey}" />
+                            <Button Classes="danger small" Content="Удалить ключ"
+                                    Command="{Binding DeleteSelectedKeyCommand}"
+                                    IsEnabled="{Binding CanManageKeys}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

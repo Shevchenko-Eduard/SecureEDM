@@ -3,16 +3,175 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:SecureEDM.Client.Presentation.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:models="using:SecureEDM.Client.Application.Models"
+             xmlns:views="using:SecureEDM.Client.Presentation.Views"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="840"
              x:Class="SecureEDM.Client.Presentation.Views.MainView"
-             x:DataType="vm:MainViewModel">
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
-    </Design.DataContext>
+             x:DataType="vm:MainViewModel"
+             Background="{DynamicResource BgBrush}">
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <Grid ColumnDefinitions="272,*">
+        <Border Grid.Column="0"
+                Background="{DynamicResource SideBrush}"
+                BorderBrush="{DynamicResource LineBrush}"
+                BorderThickness="0,0,1,0">
+            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" Margin="16,28,16,22">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12" Margin="8,0">
+                    <Viewbox Width="36" Height="36" VerticalAlignment="Top">
+                        <Canvas Width="48" Height="48">
+                            <Ellipse Canvas.Left="3" Canvas.Top="3" Width="42" Height="42"
+                                     Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.6" />
+                            <Ellipse Canvas.Left="7.5" Canvas.Top="7.5" Width="33" Height="33"
+                                     Stroke="{DynamicResource AccentBrush}" StrokeThickness="0.9"
+                                     StrokeDashArray="1.2,2.2" />
+                            <Path Data="M15.5 24.5 L21.5 30.5 L32.5 18"
+                                  Stroke="{DynamicResource AccentBrush}" StrokeThickness="2.6"
+                                  StrokeLineCap="Round" StrokeJoin="Round" />
+                        </Canvas>
+                    </Viewbox>
+                    <TextBlock Classes="brand-title" MaxWidth="190" VerticalAlignment="Center"
+                               Text="Электронный документооборот" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="1" Classes="brand-sub" Margin="8,10,8,22"
+                           Text="Подписание и проверка документов ЭЦП. Прототип v2." />
+
+                <Border Grid.Row="2" Classes="who">
+                    <StackPanel>
+                        <TextBlock Classes="who-label" Text="Текущий пользователь" />
+                        <ComboBox Classes="plain"
+                                  ItemsSource="{Binding Users}"
+                                  SelectedItem="{Binding SelectedUser}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:EdoUser">
+                                    <TextBlock Text="{Binding DisplayName}" FontWeight="Medium" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+
+                <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="3">
+                        <Button Classes="nav" Classes.selected="{Binding IsDocumentsTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="docs"
+                                Content="Документы" />
+                        <Button Classes="nav" Classes.selected="{Binding IsKeysTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="keys"
+                                Content="Ключи" />
+                        <Button Classes="nav" Classes.selected="{Binding IsSigningTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="sign"
+                                Content="Подписание" />
+                        <Button Classes="nav" Classes.selected="{Binding IsVerificationTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="verify"
+                                Content="Проверка" />
+                        <Button Classes="nav" Classes.selected="{Binding IsHashesTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="hashes"
+                                Content="Хеши" />
+                        <Button Classes="nav" Classes.selected="{Binding IsFilesTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="files"
+                                Content="Файлы" />
+                        <Button Classes="nav" Classes.selected="{Binding IsLogTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="log"
+                                Content="Журнал" />
+                        <Button Classes="nav" Classes.selected="{Binding IsSettingsTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="settings"
+                                Content="Настройки" />
+                        <Button Classes="nav" Classes.selected="{Binding IsAboutTab}"
+                                Command="{Binding SelectTabCommand}" CommandParameter="about"
+                                Content="О схеме" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Border Grid.Row="4" Background="{DynamicResource HoverBrush}"
+                        CornerRadius="10" Padding="3" Margin="0,22,0,0">
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Button Grid.Column="0" Classes="theme" Classes.selected="{Binding IsAutoTheme}"
+                                Command="{Binding SetThemeCommand}" CommandParameter="auto" Content="Авто" />
+                        <Button Grid.Column="1" Classes="theme" Classes.selected="{Binding IsLightTheme}"
+                                Command="{Binding SetThemeCommand}" CommandParameter="light" Content="Светлая" />
+                        <Button Grid.Column="2" Classes="theme" Classes.selected="{Binding IsDarkTheme}"
+                                Command="{Binding SetThemeCommand}" CommandParameter="dark" Content="Тёмная" />
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="5" ColumnDefinitions="*,*,*" Margin="8,16,8,0">
+                    <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                        <TextBlock Classes="stat-label" Text="Документов" />
+                        <TextBlock Classes="stat-value" Text="{Binding DocumentCount}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0,0,4,0">
+                        <TextBlock Classes="stat-label" Text="Ключей" />
+                        <TextBlock Classes="stat-value" Text="{Binding KeyCount}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Classes="stat-label" Text="Подписей" />
+                        <TextBlock Classes="stat-value" Text="{Binding SignatureCount}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Column="1"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <Panel>
+                <views:DocumentsView IsVisible="{Binding IsDocumentsTab}" />
+                <views:KeysView IsVisible="{Binding IsKeysTab}" />
+                <views:SigningView IsVisible="{Binding IsSigningTab}" />
+                <views:VerificationView IsVisible="{Binding IsVerificationTab}" />
+                <views:HashesView IsVisible="{Binding IsHashesTab}" />
+                <views:FilesView IsVisible="{Binding IsFilesTab}" />
+                <views:LogView IsVisible="{Binding IsLogTab}" />
+                <views:SettingsView IsVisible="{Binding IsSettingsTab}" />
+                <views:AboutView IsVisible="{Binding IsAboutTab}" />
+            </Panel>
+        </ScrollViewer>
+
+        <ItemsControl Grid.Column="1"
+                      ItemsSource="{Binding Toasts}"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom"
+                      Margin="0,0,16,16"
+                      IsHitTestVisible="False">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Spacing="8" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:ToastViewModel">
+                    <Border Classes="toast">
+                        <Grid ColumnDefinitions="3,*">
+                            <Border Grid.Column="0" Classes="toast-accent"
+                                    Classes.ok="{Binding IsOk}"
+                                    Classes.bad="{Binding IsBad}"
+                                    Classes.warn="{Binding IsWarn}" />
+                            <TextBlock Grid.Column="1" Margin="11,10,14,10"
+                                       Text="{Binding Message}" TextWrapping="Wrap" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Grid.ColumnSpan="2" IsVisible="{Binding IsConfirmVisible}"
+              Background="{DynamicResource OverlayBrush}">
+            <Border Classes="modal" Width="440"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Margin="24">
+                    <TextBlock Classes="h2" Margin="0,0,0,8" Text="{Binding ConfirmTitle}" />
+                    <TextBlock Text="{Binding ConfirmText}" TextWrapping="Wrap"
+                               Foreground="{DynamicResource MuteBrush}" Margin="0,0,0,18" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                        <Button Classes="secondary" Content="Отмена"
+                                Command="{Binding CancelConfirmCommand}" />
+                        <Button Classes="danger" Content="Подтвердить"
+                                Command="{Binding ConfirmCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
 </UserControl>
